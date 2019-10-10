@@ -4,6 +4,6 @@
   * baza - goodenough
   * user/password - postgres/postgres
 2. Maven
-3. Java 8
+3. Java 12
 
 I powinno hulać
