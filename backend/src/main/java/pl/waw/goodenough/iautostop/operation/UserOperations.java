@@ -64,7 +64,7 @@ public class UserOperations {
             CoordinatesDto coordinatesDtoTo = routeService.getCoordinatesByLocationId(userLoggedInDto.getTravelTo());
             List<String> routeStreetNamesList = routeService.getRouteStreetNames(coordinatesDtoFrom, coordinatesDtoTo);
 
-            final String routeStreetNames = routeStreetNamesList.toString()
+            final String routeStreetNames = routeStreetNamesList.toString();
             appUserRoute.setTravelStreetList(routeStreetNames.substring(1, routeStreetNames.length() - 1));
         }
 
