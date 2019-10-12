@@ -9,9 +9,11 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-public class User {
+public class AppUserRoute {
 
     @Id
-    private String id;
-    private String role;
+    private String userId;
+    private String travelFrom;
+    private String travelTo;
+    private String travelStreetList;
 }
