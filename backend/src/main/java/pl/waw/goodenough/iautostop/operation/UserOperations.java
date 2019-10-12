@@ -1,7 +1,6 @@
 package pl.waw.goodenough.iautostop.operation;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -70,7 +69,7 @@ public class UserOperations {
         appUserRoute.setUserId(userLoggedInDto.getId());
         appUserRoute.setTravelFrom(userLoggedInDto.getTravelFrom());
 
-        if("driver".equals(userLoggedInDto.getRole())) {
+        if ("driver".equals(userLoggedInDto.getRole())) {
             List<String> routeStreetNamesList =
                     routeService.getRouteStreetNames(CoordinatesDto.parseString(userLoggedInDto.getTravelFrom()), CoordinatesDto.parseString(userLoggedInDto.getTravelTo()));
             appUserRoute.setTravelStreetList(routeStreetNamesList.toString());
