@@ -14,7 +14,7 @@ export default new Router({
       component: Home
     },
     {
-      path: "/:type/:id/new-trip",
+      path: "/:role/:id/new-trip",
       name: "SetTripView",
       props: true,
       component: () => import("./views/SetTripView.vue")
