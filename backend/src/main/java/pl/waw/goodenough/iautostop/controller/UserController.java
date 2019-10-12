@@ -10,8 +10,7 @@ import pl.waw.goodenough.iautostop.operation.UserOperations;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/users")
@@ -33,6 +32,10 @@ public class UserController {
     public ResponseEntity<Object> createUser(
             @Validated @RequestBody UserLoggedInDto userLoggedInDto) {
 
+        if (!("passenger".equals(userLoggedInDto.getRole()) || "driver".equals(userLoggedInDto.getRole()))) {
+            throw new ResponseStatusException(BAD_REQUEST, "Role must be 'driver' or 'passenger'");
+        }
+
         if (userLoggedInDto.getTravelFrom().equals(userLoggedInDto.getTravelTo())) {
 
             throw new ResponseStatusException(BAD_REQUEST, "You cannot put the same address in from and to fields");
@@ -40,7 +43,7 @@ public class UserController {
 
         userOperations.createUser(userLoggedInDto);
 
-        return new ResponseEntity<>(OK);
+        return new ResponseEntity<>(CREATED);
     }
 
     @GetMapping(value = "/{driverId}/available-passengers")
