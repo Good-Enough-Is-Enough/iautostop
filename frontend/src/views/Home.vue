@@ -8,8 +8,12 @@
           class="grey lighten-5"
           style="height: 300px;"
         >
-          <v-btn block to="/driver/new-trip">Driver</v-btn>
-          <v-btn block to="/passenger/new-trip">Passenger</v-btn>
+          <v-btn block :to="`/driver/${generateUserId()}/new-trip`">
+            I'm a Driver
+          </v-btn>
+          <v-btn block :to="`/passenger/${generateUserId()}/new-trip`">
+            I'm a Passenger
+          </v-btn>
         </v-row>
       </v-col>
     </v-container>
@@ -17,7 +21,14 @@
 </template>
 
 <script lang="js">
+const shortid = require("shortid");
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  methods: {
+    generateUserId() {
+      return shortid.generate();
+    }
+  }
 }
 </script>
