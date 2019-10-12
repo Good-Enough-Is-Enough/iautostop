@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class HereRouteRepository implements RouteRepository {
+public class HereMapApiRepository implements MapApiRepository {
 
     private static final String APP_ID = "i8w3y91fhZ5nDPijP7XL";
     private static final String APP_CODE = "v6YKXNdMEl2eGoTGHyToSQ";
@@ -22,7 +22,7 @@ public class HereRouteRepository implements RouteRepository {
 
     private RestTemplate restTemplate;
 
-    public HereRouteRepository(RestTemplate rt) {
+    public HereMapApiRepository(RestTemplate rt) {
         restTemplate = rt;
     }
 
