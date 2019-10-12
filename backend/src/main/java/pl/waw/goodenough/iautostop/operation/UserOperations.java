@@ -5,10 +5,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
-import pl.waw.goodenough.iautostop.model.entity.User;
-import pl.waw.goodenough.iautostop.model.entity.UserRoute;
-import pl.waw.goodenough.iautostop.repository.UserRepository;
-import pl.waw.goodenough.iautostop.repository.UserRouteRepository;
+import pl.waw.goodenough.iautostop.model.entity.AppUser;
+import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
+import pl.waw.goodenough.iautostop.repository.AppUserRepository;
+import pl.waw.goodenough.iautostop.repository.AppUserRouteRepository;
 
 import java.util.Optional;
 
@@ -18,19 +18,22 @@ import java.util.Optional;
 public class UserOperations {
 
     @Autowired
-    private UserRepository userRepository;
+    private AppUserRepository appUserRepository;
 
     @Autowired
-    private UserRouteRepository userRouteRepository;
+    private AppUserRouteRepository appUserRouteRepository;
 
     public UserLoggedInDto getUser(final String id) {
 
-        Optional<UserRoute> userRoute = userRouteRepository.findById(id);
-        Optional<User> user = userRepository.findById(id);
+        Optional<AppUserRoute> userRoute = appUserRouteRepository.findByUserId(id);
+
+        Optional<AppUser> user = appUserRepository.findByUserId(id);
+
 
         if (userRoute.isPresent() && user.isPresent()) {
-            UserRoute ur = userRoute.get();
-            User u = user.get();
+
+            AppUser u = user.get();
+            AppUserRoute ur = userRoute.get();
 
             return UserLoggedInDto
                     .builder()
