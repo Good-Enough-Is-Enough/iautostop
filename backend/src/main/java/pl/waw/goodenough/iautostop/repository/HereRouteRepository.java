@@ -3,7 +3,7 @@ package pl.waw.goodenough.iautostop.repository;
 import com.jayway.jsonpath.JsonPath;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import pl.waw.goodenough.iautostop.model.dto.CoordinatesDTO;
+import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
 
 import java.util.HashSet;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class HereRouteRepository implements RouteRepository {
         restTemplate = rt;
     }
 
-    public List<String> getRouteStreetNames(CoordinatesDTO travelFrom, CoordinatesDTO travelTo) {
+    public List<String> getRouteStreetNames(CoordinatesDto travelFrom, CoordinatesDto travelTo) {
 
         String url = URL + "?" + "app_id=" + APP_ID + "&app_code=" + APP_CODE + "&waypoint0=" + travelFrom + "&waypoint1=" +
                 travelTo + "&mode=" + MODE + "&maneuverAttributes=" + MANOUVER_ATTRIBUTES;
@@ -46,7 +46,7 @@ public class HereRouteRepository implements RouteRepository {
     }
 
     @Override
-    public CoordinatesDTO getCoordinatesByLocationId(String locationId) {
+    public CoordinatesDto getCoordinatesByLocationId(String locationId) {
 
         String url = GEOCODING_API + "?" + "app_id=" + APP_ID + "&app_code=" + APP_CODE + "&locationid=" + locationId;
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
@@ -55,7 +55,7 @@ public class HereRouteRepository implements RouteRepository {
 
         HashMap<String, Double> coordinates = JsonPath.parse(responseBody).read(jsonPath);
 
-        return CoordinatesDTO.builder()
+        return CoordinatesDto.builder()
                 .latitude(coordinates.get("Latitude"))
                 .longitude(coordinates.get("Longitude")).build();
     }
