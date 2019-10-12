@@ -3,6 +3,7 @@ package pl.waw.goodenough.iautostop.operation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.model.entity.AppUser;
 import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
@@ -62,7 +63,7 @@ public class UserOperations {
 
         if("driver".equals(userLoggedInDto.getRole())) {
             List<String> routeStreetNamesList =
-                    routeService.getRouteStreetNames(userLoggedInDto.getTravelFrom(), userLoggedInDto.getTravelTo());
+                    routeService.getRouteStreetNames(CoordinatesDto.parseString(userLoggedInDto.getTravelFrom()), CoordinatesDto.parseString(userLoggedInDto.getTravelTo()));
             appUserRoute.setTravelStreetList(routeStreetNamesList.toString());
         }
 
