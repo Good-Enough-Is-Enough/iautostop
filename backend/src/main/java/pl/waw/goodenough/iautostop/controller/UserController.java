@@ -6,17 +6,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.operation.UserOperations;
+import pl.waw.goodenough.iautostop.repository.RouteRepository;
 
-@RestController
+@RestController("")
 @RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserOperations userOperations;
+    @Autowired
+    private RouteRepository routeRepository;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserLoggedInDto> getUser(
             @PathVariable(value = "id") final String id) {
+
+        System.out.println(routeRepository.getCoordinatesByLocationId("NT_6IE2j58EVNVPqikzmhbo8C"));
 
         final UserLoggedInDto userLoggedInDto = userOperations.getUser(id);
 
