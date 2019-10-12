@@ -98,6 +98,7 @@ public class UserOperations {
                                     .id(appUserRoute.getUserId())
                                     .travelFrom(appUserRoute.getTravelFrom())
                                     .travelTo(appUserRoute.getTravelTo())
+                                    .role("passenger")
                                     .build()
                     );
                 }
