@@ -1,20 +1,19 @@
 package pl.waw.goodenough.iautostop.model.dto;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
-
 import java.util.List;
 
 public class UserLoggedInDto {
 
     private String userId;
     private String roleType;
-    private List<String> streets;
+    private String start;
+    private String end;
 
-    public UserLoggedInDto(String userId, String roleType, List<String> streets) {
+    public UserLoggedInDto(String userId, String roleType, String start, String end) {
         this.userId = userId;
         this.roleType = roleType;
-        this.streets = streets;
+        this.start = start;
+        this.end = end;
     }
 
     public String getUserId() {
@@ -33,11 +32,19 @@ public class UserLoggedInDto {
         this.roleType = roleType;
     }
 
-    public List<String> getStreets() {
-        return streets;
+    public String getStart() {
+        return start;
     }
 
-    public void setStreets(List<String> streets) {
-        this.streets = streets;
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
     }
 }
