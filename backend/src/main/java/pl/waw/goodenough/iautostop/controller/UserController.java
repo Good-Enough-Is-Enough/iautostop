@@ -1,7 +1,6 @@
 package pl.waw.goodenough.iautostop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
@@ -29,7 +28,7 @@ public class UserController {
     public ResponseEntity<Object> createUser(
             @RequestBody UserLoggedInDto userLoggedInDto) {
 
-        if("passenger".equals(userLoggedInDto.getRole())) {
+        if ("passenger".equals(userLoggedInDto.getRole())) {
             userOperations.createUser(userLoggedInDto);
         }
 
