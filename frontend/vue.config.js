@@ -1,5 +1,9 @@
 module.exports = {
   devServer: {
-    proxy: "http://localhost:6660"
+    proxy: {
+      "/user/*": {
+        target: "http://localhost:6660"
+      }
+    }
   }
 };
