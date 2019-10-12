@@ -65,7 +65,7 @@ export default {
                 this.entries = suggestions;
               })
               .catch(err => {
-                console.log(err)
+                console.error(err)
               })
               .finally(() => (this.isLoading = false))
     },
