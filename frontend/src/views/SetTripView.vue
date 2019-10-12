@@ -1,16 +1,22 @@
 <template>
   <v-content>
-    <route-selector
-      :disabled="isLoading"
-      :direction="'From'"
-      @route-select="onRouteSelect($event, 'from')"
-    />
-    <route-selector
-      :disabled="isLoading"
-      :direction="'To'"
-      @route-select="onRouteSelect($event, 'to')"
-    />
-    <v-btn :loading="isLoading" @click="setUserInfo">Let's go!</v-btn>
+    <v-container class="fill-height" fluid>
+      <v-col cols="12">
+        <route-selector
+          :disabled="isLoading"
+          :direction="'From'"
+          @route-select="onRouteSelect($event, 'from')"
+        />
+        <route-selector
+          :disabled="isLoading"
+          :direction="'To'"
+          @route-select="onRouteSelect($event, 'to')"
+        />
+        <v-row align="center" justify="center">
+          <v-btn :loading="isLoading" @click="setUserInfo">Let's go!</v-btn>
+        </v-row>
+      </v-col>
+    </v-container>
   </v-content>
 </template>
 
@@ -47,6 +53,10 @@ export default {
         travelTo: this.travelTo
       };
 
+      if (!this.travelFrom || !this.travelTo) {
+        return;
+      }
+
       this.isLoading = true;
 
       fetch(SET_USER_INFO, {
@@ -61,8 +71,8 @@ export default {
           this.$router.push(`/${this.role}/${this.id}/passengers-list`);
         }
       })
-      .catch(err => {
-        console.error(err)
+      .catch((err) => {
+        console.error(err);
       })
       .finally(() => (this.isLoading = false));
     }
