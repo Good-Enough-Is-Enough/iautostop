@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface RouteRepository {
 
-    List<String> getRouteStreetNames(CoordinatesDTO travelFrom, CoordinatesDTO travelTo);
+    List<String> getRouteStreetNames(String travelFrom, String travelTo);
     CoordinatesDTO getCoordinatesByLocationId(String locationId);
 }
