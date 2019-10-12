@@ -21,7 +21,7 @@ create table app_user_route
             references app_user,
     travel_from varchar(1000) not null,
     travel_to varchar(1000) not null,
-    travel_street_list text not null
+    travel_street_list text
 );
 
 alter table app_user_route owner to postgres;
