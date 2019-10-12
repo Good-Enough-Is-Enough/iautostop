@@ -28,9 +28,7 @@ public class UserController {
     public ResponseEntity<Object> createUser(
             @RequestBody UserLoggedInDto userLoggedInDto) {
 
-        if ("passenger".equals(userLoggedInDto.getRole())) {
-            userOperations.createUser(userLoggedInDto);
-        }
+        userOperations.createUser(userLoggedInDto);
 
         return new ResponseEntity<>(OK);
     }
