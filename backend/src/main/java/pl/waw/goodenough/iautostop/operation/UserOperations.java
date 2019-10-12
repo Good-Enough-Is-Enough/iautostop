@@ -66,7 +66,8 @@ public class UserOperations {
         if ("driver".equals(userLoggedInDto.getRole())) {
             List<String> routeStreetNamesList =
                     routeService.getRouteStreetNames(CoordinatesDto.parseString(userLoggedInDto.getTravelFrom()), CoordinatesDto.parseString(userLoggedInDto.getTravelTo()));
-            appUserRoute.setTravelStreetList(routeStreetNamesList.toString());
+            String routeStreetNames = routeStreetNamesList.toString();
+            appUserRoute.setTravelStreetList(routeStreetNames.substring(1, routeStreetNames.length() - 1));
         }
 
         appUserRoute.setTravelTo(userLoggedInDto.getTravelTo());
