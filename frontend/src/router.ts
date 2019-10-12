@@ -14,10 +14,14 @@ export default new Router({
       component: Home
     },
     {
-      path: "/about",
-      name: "about",
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+      path: "/driver",
+      name: "driver-view",
+      component: () => import("./views/DriverView.vue")
+    },
+    {
+      path: "/passenger",
+      name: "passenger-view",
+      component: () => import("./views/PassengerView.vue")
     }
   ]
 });
