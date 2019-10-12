@@ -57,7 +57,9 @@ export default {
         }
       })
       .then(() => {
-        this.$router.push(`/${this.role}/${this.id}/passengers-list`)
+        if (this.role === 'driver') {
+          this.$router.push(`/${this.role}/${this.id}/passengers-list`);
+        }
       })
       .catch(err => {
         console.error(err)
@@ -67,4 +69,3 @@ export default {
   }
 };
 </script>
-
