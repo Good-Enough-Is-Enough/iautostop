@@ -21,8 +21,6 @@ public class UserController {
     public ResponseEntity<UserLoggedInDto> getUser(
             @PathVariable(value = "id") final String id) {
 
-        System.out.println(routeRepository.getCoordinatesByLocationId("NT_6IE2j58EVNVPqikzmhbo8C"));
-
         final UserLoggedInDto userLoggedInDto = userOperations.getUser(id);
 
         return new ResponseEntity<>(userLoggedInDto, HttpStatus.OK);
