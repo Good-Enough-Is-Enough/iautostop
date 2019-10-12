@@ -21,8 +21,7 @@ public class UserController {
     private UserOperations userOperations;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserLoggedInDto> getUser(
-            @PathVariable(value = "id") final String id) {
+    public ResponseEntity<UserLoggedInDto> getUser(@PathVariable(value = "id") final String id) {
 
         final UserLoggedInDto userLoggedInDto = userOperations.getUser(id);
 
@@ -30,8 +29,7 @@ public class UserController {
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<Object> createUser(
-            @Validated @RequestBody UserLoggedInDto userLoggedInDto) {
+    public ResponseEntity<Object> createUser(@Validated @RequestBody UserLoggedInDto userLoggedInDto) {
 
         if (userLoggedInDto.getTravelFrom().equals(userLoggedInDto.getTravelTo())) {
 
