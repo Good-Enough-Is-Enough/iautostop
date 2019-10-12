@@ -4,22 +4,22 @@ import java.util.List;
 
 public class UserLoggedInDto {
 
-    private String UserId;
+    private String userId;
     private String roleType;
     private List<String> streets;
 
     public UserLoggedInDto(String userId, String roleType, List<String> streets) {
-        UserId = userId;
+        this.userId = userId;
         this.roleType = roleType;
         this.streets = streets;
     }
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
     public String getRoleType() {
