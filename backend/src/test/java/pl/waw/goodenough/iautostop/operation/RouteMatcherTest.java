@@ -30,6 +30,13 @@ public class RouteMatcherTest {
     }
 
     @Test
+    public void matcherTest4True() {
+        List<String> route = Arrays.asList("1","2","3","4","5","6");
+        RouteMatcher routeMatcher = new RouteMatcher(route, "1", "6");
+        Assertions.assertThat(routeMatcher.match()).isTrue();
+    }
+
+    @Test
     public void matcherTest1False() {
         List<String> route = Arrays.asList("1","2","3","4","5","6");
         RouteMatcher routeMatcher = new RouteMatcher(route, "6", "2");
