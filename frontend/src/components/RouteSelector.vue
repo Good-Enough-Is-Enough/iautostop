@@ -3,6 +3,7 @@
     v-model="model"
     :items="items"
     :loading="isLoading"
+    :disabled="disabled"
     :search-input.sync="search"
     color="white"
     hide-no-data
@@ -24,7 +25,11 @@ const CITY = 'Warsaw';
 export default {
     name: "RouteSelector",
     props: {
-      direction: {String}
+      direction: {String},
+      disabled: {
+        type: Boolean,
+        default: false,
+      }
     },
     data() {
       return {
