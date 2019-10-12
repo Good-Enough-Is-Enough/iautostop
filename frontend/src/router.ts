@@ -14,14 +14,10 @@ export default new Router({
       component: Home
     },
     {
-      path: "/driver",
-      name: "driver-view",
-      component: () => import("./views/DriverView.vue")
-    },
-    {
-      path: "/passenger",
-      name: "passenger-view",
-      component: () => import("./views/PassengerView.vue")
+      path: "/:type/:id/new-trip",
+      name: "SetTripView",
+      props: true,
+      component: () => import("./views/SetTripView.vue")
     }
   ]
 });

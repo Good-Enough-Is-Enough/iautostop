@@ -9,11 +9,11 @@
     hide-selected
     item-text="Description"
     item-value="API"
-    label="From"
-    placeholder="Start typing to Search Street"
+    :label="direction"
+    placeholder="Start typing to search street"
     prepend-icon="mdi-database-search"
     return-object
-  ></v-autocomplete>
+  />
 </template>
 
 <script lang="js">
@@ -23,6 +23,9 @@ const CITY = 'Warsaw';
 
 export default {
     name: "RouteSelector",
+    props: {
+      direction: {String}
+    },
     data() {
       return {
         entries: [],
@@ -44,7 +47,7 @@ export default {
 
   watch: {
     model(val) {
-      this.$emit('routeSelect', val.locationId);
+      this.$emit('route-select', val.locationId);
     },
     search (val) {
       if (val.length < 3) return;
