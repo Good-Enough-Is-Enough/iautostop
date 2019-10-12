@@ -3,10 +3,10 @@
 *UserLoggedInDto*
 
     {
-      userId: String,
-      roleType: String,
-      start: String,
-      end: String
+      id: String,
+      role: String,
+      travelFrom: String,
+      travelTo: String
     }
 
-roleTypes: driver, passenger
+role: driver, passenger
