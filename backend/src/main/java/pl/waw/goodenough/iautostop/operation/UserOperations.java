@@ -2,6 +2,7 @@ package pl.waw.goodenough.iautostop.operation;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.model.entity.User;
@@ -16,7 +17,10 @@ import java.util.Optional;
 @NoArgsConstructor
 public class UserOperations {
 
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private UserRouteRepository userRouteRepository;
 
     public UserLoggedInDto getUser(final String id) {
