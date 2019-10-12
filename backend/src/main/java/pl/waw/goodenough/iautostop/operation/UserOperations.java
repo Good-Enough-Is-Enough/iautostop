@@ -29,21 +29,16 @@ public class UserOperations {
     public UserLoggedInDto getUser(final String id) {
 
         Optional<AppUserRoute> userRoute = appUserRouteRepository.findByUserId(id);
-
         Optional<AppUser> user = appUserRepository.findByUserId(id);
-
 
         if (userRoute.isPresent() && user.isPresent()) {
 
-            AppUser u = user.get();
-            AppUserRoute ur = userRoute.get();
-
             return UserLoggedInDto
                     .builder()
-                    .id(ur.getUserId())
-                    .role(u.getRole())
-                    .travelFrom(ur.getTravelFrom())
-                    .travelTo(ur.getTravelTo())
+                    .id(userRoute.get().getUserId())
+                    .role(user.get().getRole())
+                    .travelFrom(userRoute.get().getTravelFrom())
+                    .travelTo(userRoute.get().getTravelTo())
                     .build();
         }
 
@@ -102,7 +97,6 @@ public class UserOperations {
                 );
             }
         }
-
 
         return matchedPassengers;
     }
