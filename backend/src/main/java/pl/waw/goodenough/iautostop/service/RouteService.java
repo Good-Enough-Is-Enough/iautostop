@@ -3,7 +3,7 @@ package pl.waw.goodenough.iautostop.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
-import pl.waw.goodenough.iautostop.repository.RouteRepository;
+import pl.waw.goodenough.iautostop.repository.MapApiRepository;
 
 import java.util.List;
 
@@ -11,9 +11,13 @@ import java.util.List;
 @AllArgsConstructor
 public class RouteService {
 
-    RouteRepository routeRepository;
+    MapApiRepository mapApiRepository;
 
     public List<String> getRouteStreetNames(CoordinatesDto travelFrom, CoordinatesDto travelTo) {
-        return routeRepository.getRouteStreetNames(travelFrom, travelTo);
+        return mapApiRepository.getRouteStreetNames(travelFrom, travelTo);
+    }
+
+    public CoordinatesDto getCoordinatesByLocationId(String locationId) {
+        return mapApiRepository.getCoordinatesByLocationId(locationId);
     }
 }

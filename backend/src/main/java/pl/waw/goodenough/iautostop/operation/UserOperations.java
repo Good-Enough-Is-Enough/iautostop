@@ -64,8 +64,11 @@ public class UserOperations {
         appUserRoute.setTravelFrom(userLoggedInDto.getTravelFrom());
 
         if ("driver".equals(userLoggedInDto.getRole())) {
-            List<String> routeStreetNamesList =
-                    routeService.getRouteStreetNames(CoordinatesDto.parseString(userLoggedInDto.getTravelFrom()), CoordinatesDto.parseString(userLoggedInDto.getTravelTo()));
+
+            CoordinatesDto coordinatesDtoFrom = routeService.getCoordinatesByLocationId(userLoggedInDto.getTravelFrom());
+            CoordinatesDto coordinatesDtoTo = routeService.getCoordinatesByLocationId(userLoggedInDto.getTravelTo());
+            List<String> routeStreetNamesList = routeService.getRouteStreetNames(coordinatesDtoFrom, coordinatesDtoTo);
+
             appUserRoute.setTravelStreetList(routeStreetNamesList.toString());
         }
 
