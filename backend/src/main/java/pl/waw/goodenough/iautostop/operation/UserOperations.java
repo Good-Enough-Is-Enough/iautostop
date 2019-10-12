@@ -54,20 +54,21 @@ public class UserOperations {
 
         appUserRepository.save(appUser);
 
+        CoordinatesDto coordinatesDtoFrom = routeService.getCoordinatesByLocationId(userLoggedInDto.getTravelFrom());
+        CoordinatesDto coordinatesDtoTo = routeService.getCoordinatesByLocationId(userLoggedInDto.getTravelTo());
+
         AppUserRoute appUserRoute = new AppUserRoute();
         appUserRoute.setUserId(userLoggedInDto.getId());
-        appUserRoute.setTravelFrom(userLoggedInDto.getTravelFrom());
+        appUserRoute.setTravelFrom(coordinatesDtoFrom.toString());
+        appUserRoute.setTravelTo(coordinatesDtoTo.toString());
 
         if ("driver".equals(userLoggedInDto.getRole())) {
 
-            CoordinatesDto coordinatesDtoFrom = routeService.getCoordinatesByLocationId(userLoggedInDto.getTravelFrom());
-            CoordinatesDto coordinatesDtoTo = routeService.getCoordinatesByLocationId(userLoggedInDto.getTravelTo());
             List<String> routeStreetNamesList = routeService.getRouteStreetNames(coordinatesDtoFrom, coordinatesDtoTo);
 
             appUserRoute.setTravelStreetList(routeStreetNamesList.toString());
         }
 
-        appUserRoute.setTravelTo(userLoggedInDto.getTravelTo());
         appUserRouteRepository.save(appUserRoute);
     }
 
