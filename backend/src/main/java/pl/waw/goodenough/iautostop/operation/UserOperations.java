@@ -1,8 +1,10 @@
 package pl.waw.goodenough.iautostop.operation;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.model.entity.AppUser;
 import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
@@ -12,6 +14,8 @@ import pl.waw.goodenough.iautostop.service.RouteService;
 
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Service
 @AllArgsConstructor
@@ -49,6 +53,11 @@ public class UserOperations {
 
     @Transactional
     public void createUser(final UserLoggedInDto userLoggedInDto) {
+
+        if (userLoggedInDto.getTravelFrom().equals(userLoggedInDto.getTravelTo())) {
+
+            throw new ResponseStatusException(BAD_REQUEST, "You can not put the sam address in from and to fields");
+        }
 
         AppUser appUser = new AppUser();
         appUser.setId(userLoggedInDto.getId());
