@@ -7,3 +7,5 @@
 3. Java 12
 
 I powinno hulać
+
+TEST
