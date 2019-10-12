@@ -7,9 +7,9 @@ import java.util.List;
 @AllArgsConstructor
 public class RouteMatcher {
 
-    List<String> driversRoute;
-    String passengerStart;
-    String passengerEnd;
+    private List<String> driversRoute;
+    private String passengerStart;
+    private String passengerEnd;
 
     public boolean match(){
         int matchingStartPoint = pointWithinRoute(driversRoute, passengerStart);
