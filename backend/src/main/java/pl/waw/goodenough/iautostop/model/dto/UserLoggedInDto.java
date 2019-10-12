@@ -3,7 +3,6 @@ package pl.waw.goodenough.iautostop.model.dto;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
