@@ -1,4 +1,4 @@
-create table "user"
+create table app_user
 (
     id varchar(1000) not null
         constraint user_pk
@@ -6,26 +6,26 @@ create table "user"
     role varchar(100) not null
 );
 
-alter table "user" owner to postgres;
+alter table app_user owner to postgres;
 
 create unique index user_id_uindex
-    on "user" (id);
+    on app_user (id);
 
 
-create table user_route
+create table app_user_route
 (
     user_id varchar(1000) not null
         constraint user_route_pk
             primary key
         constraint user_route_user_id_fk
-            references "user",
+            references app_user,
     travel_from varchar(1000) not null,
     travel_to varchar(1000) not null,
     travel_street_list text not null
 );
 
-alter table user_route owner to postgres;
+alter table app_user_route owner to postgres;
 
 create unique index user_route_user_id_uindex
-    on user_route (user_id);
+    on app_user_route (user_id);
 
