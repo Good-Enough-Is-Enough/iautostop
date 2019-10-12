@@ -47,7 +47,7 @@ public class UserController {
     public ResponseEntity<List<UserLoggedInDto>> getAvailablePassengers(
             @PathVariable(value = "driverId") final String driverId) {
 
-        List<UserLoggedInDto> userLoggedInDtoList = userOperations.getAvailablePassengers(driverId);
+        final List<UserLoggedInDto> userLoggedInDtoList = userOperations.getAvailablePassengers(driverId);
 
         return new ResponseEntity<>(userLoggedInDtoList, OK);
     }
