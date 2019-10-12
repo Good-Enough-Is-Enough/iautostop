@@ -1,29 +1,18 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <v-app id="inspire">
+      <div>
+        <v-app-bar color="deep-purple accent-4" dark>
+          <v-toolbar-title>iAutostop</v-toolbar-title>
+        </v-app-bar>
+
+        <router-view />
+
+        <v-footer>
+          <div class="flex-grow-1"></div>
+          <div>&copy; {{ new Date().getFullYear() }}</div>
+        </v-footer>
+      </div>
+    </v-app>
   </div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
