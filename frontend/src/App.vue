@@ -3,7 +3,7 @@
     <v-app id="inspire">
       <div>
         <v-app-bar color="deep-purple accent-4" dark>
-          <v-toolbar-title>Iautostop</v-toolbar-title>
+          <v-toolbar-title>iAutostop</v-toolbar-title>
         </v-app-bar>
 
         <router-view />

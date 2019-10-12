@@ -17,5 +17,7 @@
 </template>
 
 <script lang="js">
-export default class Home extends Vue {}
+export default {
+  name: 'Home'
+}
 </script>
