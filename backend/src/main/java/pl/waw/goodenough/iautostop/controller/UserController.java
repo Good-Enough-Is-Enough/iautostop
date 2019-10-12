@@ -1,5 +1,6 @@
 package pl.waw.goodenough.iautostop.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,6 +15,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
 
     @Autowired
@@ -51,5 +53,13 @@ public class UserController {
         final List<UserLoggedInDto> userLoggedInDtoList = userOperations.getAvailablePassengers(driverId);
 
         return new ResponseEntity<>(userLoggedInDtoList, OK);
+    }
+
+    @GetMapping(value = "/{driverId}/streets")
+    public ResponseEntity<List<String>> getStreetsForDriversRoute(
+            @PathVariable(value = "driverId") final String driverId) {
+
+        final List<String> streets = userOperations.getStreetNamesForDriver(driverId);
+        return new ResponseEntity<>(streets, OK);
     }
 }
