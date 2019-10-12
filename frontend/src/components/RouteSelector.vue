@@ -12,7 +12,7 @@
     item-value="API"
     :label="direction"
     placeholder="Start typing to search street"
-    prepend-icon="mdi-database-search"
+    prepend-icon="mdi-magnify"
     return-object
   />
 </template>
@@ -42,7 +42,7 @@ export default {
 
   computed: {
     items () {
-      return this.entries.map(entry => {
+      return this.entries.map((entry) => {
         const Description = entry.address.street.replace('ulica', 'ul. ');
 
         return Object.assign({}, entry, { Description })
@@ -64,18 +64,16 @@ export default {
 
       // Lazily load input items
       fetch(`http://autocomplete.geocoder.api.here.com/6.2/suggest.json?app_id=${HERE_MAP_APP_ID}&app_code=${HERE_MAP_APP_CODE}&country=POL&query=${CITY}+${val}`)
-              .then(res => res.json())
-              .then(res => {
-                const { suggestions } = res;
-                this.entries = suggestions;
-              })
-              .catch(err => {
-                console.error(err)
-              })
-              .finally(() => (this.isLoading = false))
+      .then((res) => res.json())
+      .then((res) => {
+        const { suggestions } = res;
+        this.entries = suggestions;
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+      .finally(() => (this.isLoading = false))
     },
   },
 }
 </script>
-
-<style scoped></style>
