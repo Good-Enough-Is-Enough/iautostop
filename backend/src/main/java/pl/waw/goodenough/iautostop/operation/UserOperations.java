@@ -1,27 +1,27 @@
 package pl.waw.goodenough.iautostop.operation;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.model.entity.AppUser;
 import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
 import pl.waw.goodenough.iautostop.repository.AppUserRepository;
 import pl.waw.goodenough.iautostop.repository.AppUserRouteRepository;
+import pl.waw.goodenough.iautostop.service.RouteService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class UserOperations {
 
-    @Autowired
     private AppUserRepository appUserRepository;
 
-    @Autowired
     private AppUserRouteRepository appUserRouteRepository;
+
+    private RouteService routeService;
 
     public UserLoggedInDto getUser(final String id) {
 
@@ -47,6 +47,7 @@ public class UserOperations {
         return null;
     }
 
+    @Transactional
     public void createUser(final UserLoggedInDto userLoggedInDto) {
 
         AppUser appUser = new AppUser();
@@ -58,6 +59,13 @@ public class UserOperations {
         AppUserRoute appUserRoute = new AppUserRoute();
         appUserRoute.setUserId(userLoggedInDto.getId());
         appUserRoute.setTravelFrom(userLoggedInDto.getTravelFrom());
+
+        if("driver".equals(userLoggedInDto.getRole())) {
+            List<String> routeStreetNamesList =
+                    routeService.getRouteStreetNames(userLoggedInDto.getTravelFrom(), userLoggedInDto.getTravelTo());
+            appUserRoute.setTravelStreetList(routeStreetNamesList.toString());
+        }
+
         appUserRoute.setTravelTo(userLoggedInDto.getTravelTo());
         appUserRouteRepository.save(appUserRoute);
     }
