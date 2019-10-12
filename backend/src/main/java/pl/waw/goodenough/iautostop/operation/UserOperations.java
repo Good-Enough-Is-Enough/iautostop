@@ -46,4 +46,19 @@ public class UserOperations {
 
         return null;
     }
+
+    public void createUser(final UserLoggedInDto userLoggedInDto) {
+
+        AppUser appUser = new AppUser();
+        appUser.setId(userLoggedInDto.getId());
+        appUser.setRole(userLoggedInDto.getRole());
+
+        appUserRepository.save(appUser);
+
+        AppUserRoute appUserRoute = new AppUserRoute();
+        appUserRoute.setUserId(userLoggedInDto.getId());
+        appUserRoute.setTravelFrom(userLoggedInDto.getTravelFrom());
+        appUserRoute.setTravelTo(userLoggedInDto.getTravelTo());
+        appUserRouteRepository.save(appUserRoute);
+    }
 }
