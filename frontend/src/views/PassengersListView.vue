@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <v-overlay :value="isLoading">
-      <v-progress-circular indeterminate size="64"></v-progress-circular>
+      <v-progress-circular indeterminate size="64" />
     </v-overlay>
     <v-list>
       <v-list-item
@@ -10,10 +10,10 @@
         @click="selectPassenger"
       >
         <v-list-item-icon>
-          <v-icon v-text="'mdi-account'"></v-icon>
+          <v-icon v-text="'mdi-account'" />
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title v-text="passenger.travelTo"></v-list-item-title>
+          <v-list-item-title v-text="passenger.travelTo" />
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -44,7 +44,6 @@ export default {
 
     },
     getPassengers() {
-
       this.isLoading = true;
 
       fetch(`/${this.id}${AVAILABLE_PASSENGERS}`,{
@@ -52,16 +51,15 @@ export default {
           'Content-Type': 'application/json',
         }
       })
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         this.passengersList = res;
       })
-      .catch(err => {
-        console.error(err)
+      .catch((err) => {
+        console.error(err);
       })
       .finally(() => (this.isLoading = false));
     }
   }
 };
 </script>
-
