@@ -22,6 +22,7 @@
 
 <script lang="js">
 import {AVAILABLE_PASSENGERS} from "../constants";
+import {notifyMe} from "../utils/notificationService";
 
 export default {
   name: 'passengers-list-view',
@@ -33,11 +34,12 @@ export default {
   data() {
     return {
       isLoading: false,
-      passengersList: []
+      passengersList: [],
+      intervalId: null,
     }
   },
   mounted() {
-    this.getPassengers();
+    this.intervalId = window.setInterval(this.getPassengers.bind(this), 5000);
   },
   methods: {
     selectPassenger() {
@@ -54,6 +56,10 @@ export default {
       .then((res) => res.json())
       .then((res) => {
         this.passengersList = res;
+
+        // if(this.passengersList.length) {
+        //   notifyMe('New passengers!')
+        // }
       })
       .catch((err) => {
         console.error(err);
