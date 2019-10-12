@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.operation.UserOperations;
-import pl.waw.goodenough.iautostop.repository.RouteRepository;
 
 import static org.springframework.http.HttpStatus.OK;
 
