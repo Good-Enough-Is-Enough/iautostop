@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.operation.UserOperations;
 
+import static org.springframework.http.HttpStatus.OK;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -20,6 +22,17 @@ public class UserController {
 
         final UserLoggedInDto userLoggedInDto = userOperations.getUser(id);
 
-        return new ResponseEntity<>(userLoggedInDto, HttpStatus.OK);
+        return new ResponseEntity<>(userLoggedInDto, OK);
+    }
+
+    @PostMapping(value = "")
+    public ResponseEntity<Object> createUser(
+            @RequestBody UserLoggedInDto userLoggedInDto) {
+
+        if("passenger".equals(userLoggedInDto.getRole())) {
+            userOperations.createUser(userLoggedInDto);
+        }
+
+        return new ResponseEntity<>(OK);
     }
 }
