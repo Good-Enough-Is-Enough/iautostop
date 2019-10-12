@@ -2,6 +2,7 @@ package pl.waw.goodenough.iautostop.operation;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
@@ -45,5 +46,20 @@ public class UserOperations {
         }
 
         return null;
+    }
+
+    public void createUser(final UserLoggedInDto userLoggedInDto) {
+
+        AppUser appUser = new AppUser();
+        appUser.setId(userLoggedInDto.getId());
+        appUser.setRole(userLoggedInDto.getRole());
+
+        appUserRepository.save(appUser);
+
+        AppUserRoute appUserRoute = new AppUserRoute();
+        appUserRoute.setUserId(userLoggedInDto.getId());
+        appUserRoute.setTravelFrom(userLoggedInDto.getTravelFrom());
+        appUserRoute.setTravelTo(userLoggedInDto.getTravelTo());
+        appUserRouteRepository.save(appUserRoute);
     }
 }
