@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
-import pl.waw.goodenough.iautostop.repository.RouteRepository;
+import pl.waw.goodenough.iautostop.repository.MapApiRepository;
 
 import java.util.List;
 
@@ -12,11 +12,11 @@ import java.util.List;
 public class TestController {
 
     @Autowired
-    RouteRepository routeRepository;
+    MapApiRepository mapApiRepository;
 
     @GetMapping("/test")
     public List<String> dupa(String from, String to) {
-        return routeRepository.getRouteStreetNames(CoordinatesDto.parseString(from), CoordinatesDto.parseString(to));
+        return mapApiRepository.getRouteStreetNames(CoordinatesDto.parseString(from), CoordinatesDto.parseString(to));
     }
 
 }

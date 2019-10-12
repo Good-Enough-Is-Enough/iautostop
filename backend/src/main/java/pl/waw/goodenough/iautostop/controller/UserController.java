@@ -18,8 +18,7 @@ public class UserController {
     private UserOperations userOperations;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserLoggedInDto> getUser(
-            @PathVariable(value = "id") final String id) {
+    public ResponseEntity<UserLoggedInDto> getUser(@PathVariable(value = "id") final String id) {
 
         final UserLoggedInDto userLoggedInDto = userOperations.getUser(id);
 
@@ -27,8 +26,7 @@ public class UserController {
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<Object> createUser(
-            @RequestBody UserLoggedInDto userLoggedInDto) {
+    public ResponseEntity<Object> createUser(@RequestBody UserLoggedInDto userLoggedInDto) {
 
         userOperations.createUser(userLoggedInDto);
 
