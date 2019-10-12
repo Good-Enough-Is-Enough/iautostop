@@ -21,6 +21,6 @@ public class CoordinatesDto {
     }
 
     public String toString() {
-        return longitude.toString() + "," + latitude.toString();
+        return latitude.toString() + "," + longitude.toString();
     }
 }
