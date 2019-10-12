@@ -1,5 +1,8 @@
 package pl.waw.goodenough.iautostop.model.dto;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
+
 import java.util.List;
 
 public class UserLoggedInDto {
