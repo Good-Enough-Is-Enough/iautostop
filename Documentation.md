@@ -5,5 +5,8 @@
     {
       userId: String,
       roleType: String,
-      streets: []
+      start: String,
+      end: String
     }
+
+roleTypes: driver, passenger
