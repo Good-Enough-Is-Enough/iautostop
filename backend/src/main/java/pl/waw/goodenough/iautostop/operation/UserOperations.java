@@ -78,7 +78,7 @@ public class UserOperations {
 
         List<UserLoggedInDto> matchedPassengers = new ArrayList<>();
 
-        final List<String> driverTravelList = Arrays.asList(driver.getTravelStreetList().split(","));
+        final List<String> driverTravelList = getStreetNamesList(driver);
 
         for (AppUserRoute appUserRoute : passengers) {
 
@@ -100,4 +100,14 @@ public class UserOperations {
 
         return matchedPassengers;
     }
+
+    public List<String> getStreetNamesForDriver(String driverId) {
+        AppUserRoute driver = appUserRouteRepository.getDriverById(driverId);
+        return getStreetNamesList(driver);
+    }
+
+    private List<String> getStreetNamesList(AppUserRoute driver) {
+        return Arrays.asList(driver.getTravelStreetList().split(","));
+    }
+
 }
