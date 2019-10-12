@@ -18,6 +18,12 @@ export default new Router({
       name: "SetTripView",
       props: true,
       component: () => import("./views/SetTripView.vue")
+    },
+    {
+      path: "/:role/:id/passengers-list",
+      name: "PassengersListView",
+      props: true,
+      component: () => import("./views/PassengersListView.vue")
     }
   ]
 });
