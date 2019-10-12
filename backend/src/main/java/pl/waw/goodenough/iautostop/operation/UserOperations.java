@@ -75,35 +75,31 @@ public class UserOperations {
 
     public List<UserLoggedInDto> getAvailablePassengers(String driverId) {
 
-        Optional<AppUserRoute> driver = appUserRouteRepository.findByUserId(driverId);
-        List<AppUserRoute> passengers = appUserRouteRepository.findAllPassengers();
+        final AppUserRoute driver = appUserRouteRepository.getDriverById(driverId);
+        final List<AppUserRoute> passengers = appUserRouteRepository.findAllPassengers();
 
         List<UserLoggedInDto> matchedPassengers = new ArrayList<>();
 
-        if (driver.isPresent()) {
+        final List<String> driverTravelList = Arrays.asList(driver.getTravelStreetList().split(","));
 
-            AppUserRoute d = driver.get();
+        for (AppUserRoute appUserRoute : passengers) {
 
-            List<String> driverTravelList = Arrays.asList(d.getTravelStreetList().split(","));
+            RouteMatcher routeMatcher = new RouteMatcher(driverTravelList, appUserRoute.getTravelFrom(), appUserRoute.getTravelTo());
 
-            for (AppUserRoute appUserRoute : passengers) {
+            if (routeMatcher.match()) {
 
-                RouteMatcher routeMatcher = new RouteMatcher(driverTravelList, appUserRoute.getTravelFrom(), appUserRoute.getTravelTo());
-
-                if (routeMatcher.match()) {
-
-                    matchedPassengers.add(
-                            UserLoggedInDto
-                                    .builder()
-                                    .id(appUserRoute.getUserId())
-                                    .travelFrom(appUserRoute.getTravelFrom())
-                                    .travelTo(appUserRoute.getTravelTo())
-                                    .role("passenger")
-                                    .build()
-                    );
-                }
+                matchedPassengers.add(
+                        UserLoggedInDto
+                                .builder()
+                                .id(appUserRoute.getUserId())
+                                .travelFrom(appUserRoute.getTravelFrom())
+                                .travelTo(appUserRoute.getTravelTo())
+                                .role("passenger")
+                                .build()
+                );
             }
         }
+
 
         return matchedPassengers;
     }
