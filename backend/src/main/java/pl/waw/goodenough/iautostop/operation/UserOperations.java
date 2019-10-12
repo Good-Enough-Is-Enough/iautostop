@@ -66,7 +66,8 @@ public class UserOperations {
 
             List<String> routeStreetNamesList = routeService.getRouteStreetNames(coordinatesDtoFrom, coordinatesDtoTo);
 
-            appUserRoute.setTravelStreetList(routeStreetNamesList.toString());
+            final String routeStreetNames = routeStreetNamesList.toString();
+            appUserRoute.setTravelStreetList(routeStreetNames.substring(1, routeStreetNames.length() - 1));
         }
 
         appUserRouteRepository.save(appUserRoute);
