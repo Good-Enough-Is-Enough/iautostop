@@ -2,7 +2,8 @@
   <div id="app">
     <v-app id="inspire">
       <div>
-        <v-app-bar color="deep-purple accent-4" dark>
+        <v-app-bar color="red accent-4" dark>
+          <img alt="Vue logo" src="./assets/logo.png" height="50px" />
           <v-toolbar-title>iAutostop</v-toolbar-title>
         </v-app-bar>
 
