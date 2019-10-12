@@ -44,7 +44,7 @@ export default {
 
   watch: {
     model(val) {
-      this.$emit(val);
+      this.$emit('routeSelect', val.locationId);
     },
     search (val) {
       if (val.length < 3) return;
