@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.operation.UserOperations;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -31,5 +33,14 @@ public class UserController {
         userOperations.createUser(userLoggedInDto);
 
         return new ResponseEntity<>(OK);
+    }
+
+    @GetMapping(value = "/{driverId}/available-passengers")
+    public ResponseEntity<List<UserLoggedInDto>> getAvailablePassengers(
+            @PathVariable(value = "driverId") final String driverId) {
+
+        List<UserLoggedInDto> userLoggedInDtoList = userOperations.getAvailablePassengers(driverId);
+
+        return new ResponseEntity<>(userLoggedInDtoList, OK);
     }
 }
