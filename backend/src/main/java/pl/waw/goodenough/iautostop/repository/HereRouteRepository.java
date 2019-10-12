@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
 
-import java.util.HashSet;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,7 +37,7 @@ public class HereRouteRepository implements RouteRepository {
                 .parse(route)
                 .read(jsonPath);
 
-        Set<String> noDuplicateStreets = new HashSet<>(streets);
+        Set<String> noDuplicateStreets = new LinkedHashSet<>(streets);
 
         return noDuplicateStreets
                 .stream()
