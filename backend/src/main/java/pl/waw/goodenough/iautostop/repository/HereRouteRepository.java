@@ -4,9 +4,7 @@ import com.jayway.jsonpath.JsonPath;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class HereRouteRepository implements RouteRepository {
 
@@ -22,12 +20,6 @@ public class HereRouteRepository implements RouteRepository {
     }
 
     public List<String> getRouteStreetNames(String travelFrom, String travelTo) {
-        Map<String, String > params = new HashMap<>();
-        params.put("app_id", APP_ID);
-        params.put("app_code", APP_CODE);
-        params.put("waypoint0", travelFrom);
-        params.put("waypoint1", travelTo);
-        params.put("mode", MODE);
 
         String url = URL + "?" + "app_id=" + APP_ID + "&app_code=" + APP_CODE + "&waypoint0=" + travelFrom + "&waypoint1=" +
                 travelTo + "&mode=" + MODE;
