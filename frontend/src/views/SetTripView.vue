@@ -2,8 +2,8 @@
   <v-content>
     <v-container class="fill-height" fluid>
       <v-col cols="12">
-        <v-text-field label="Name" v-model="name"/>
-        <v-text-field label="Phone" v-model="phone" v-mask="phoneMask"/>
+        <v-text-field label="Name" v-model="name" />
+        <v-text-field label="Phone" v-model="phone" v-mask="phoneMask" />
         <location-selector
           :disabled="isLoading"
           :direction="'From'"
@@ -15,7 +15,7 @@
           @route-select="onRouteSelect($event, 'to')"
         />
         <v-row align="center" justify="center">
-          <v-btn :loading="isLoading" @click="setUserInfo">Let's go!</v-btn>
+          <v-btn :loading="isLoading" @click="setUserInfo">Jedźmy!</v-btn>
         </v-row>
       </v-col>
     </v-container>
@@ -23,13 +23,13 @@
 </template>
 
 <script lang="js">
-import {mask} from 'vue-the-mask'
+import { mask } from "vue-the-mask";
 
 import LocationSelector from "../components/LocationSelector";
 import { SET_USER_INFO } from "../constants";
 
 export default {
-  name: 'set-trip-view',
+  name: 'SetTripView',
   components: {LocationSelector},
   props: {
     id: {String},
@@ -59,11 +59,13 @@ export default {
       this.user = {
         id: this.id,
         role: this.role,
+        name: this.name,
+        phone: this.phone,
         travelFrom: this.travelFrom,
         travelTo: this.travelTo
       };
 
-      if (!this.travelFrom || !this.travelTo || !this.name || !name.length) {
+      if (!this.travelFrom || !this.travelTo || !this.name || !this.name.length) {
         return;
       }
 
@@ -79,6 +81,8 @@ export default {
       .then(() => {
         if (this.role === 'driver') {
           this.$router.push(`/${this.role}/${this.id}/passengers-list`);
+        } else if (this.role === 'passenger') {
+          this.$router.push(`/${this.role}/${this.id}/panel`);
         }
       })
       .catch((err) => {
