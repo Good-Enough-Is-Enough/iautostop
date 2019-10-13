@@ -52,10 +52,10 @@
       <v-img
               class="white--text align-end"
               height="200px"
-              src="https://previews.123rf.com/images/tanyalmera/tanyalmera1606/tanyalmera160600005/58296044-hooray-word-cartoon-hand-lettering-positive-saying-for-cards-posters-and-social-media-content-happin.jpg"
+              src="https://www.elegantthemes.com/blog/wp-content/uploads/2016/03/500-internal-server-error-featured-image-1.png"
       >
-        <v-card-title class="text--primary">
-          <strong>Podwózka zaakceptowana!</strong>
+        <v-card-title>
+          <strong>Popsuło się :(</strong>
         </v-card-title>
       </v-img>
 
