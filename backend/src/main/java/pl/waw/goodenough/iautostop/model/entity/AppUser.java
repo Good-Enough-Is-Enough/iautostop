@@ -14,4 +14,5 @@ public class AppUser {
     @Id
     private String id;
     private String role;
+    private String name;
 }
