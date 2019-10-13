@@ -81,7 +81,7 @@ public class UserOperations {
     public List<UserLoggedInDto> getAvailablePassengers(String driverId) {
 
         final AppUserRoute driver = appUserRouteRepository.getDriverById(driverId);
-        final List<AppUserRoute> passengers = appUserRouteRepository.findAllPassengers();
+        final List<AppUserRoute> passengers = appUserRouteRepository.findAllAvailablePassengers();
 
         List<UserLoggedInDto> matchedPassengers = new ArrayList<>();
 
