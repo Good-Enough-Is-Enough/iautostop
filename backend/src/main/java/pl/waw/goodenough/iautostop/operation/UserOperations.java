@@ -177,6 +177,9 @@ public class UserOperations {
 
     private void removePassengersPairedWithDriver(String driverId) {
         List<AppMatchedPairs> matchedPairs = appMatchedPairsRepository.selectAllByDriverId(driverId);
+        if (matchedPairs.isEmpty()) {
+            return;
+        }
         List<String> passengersId = matchedPairs
                 .stream()
                 .map(AppMatchedPairs::getPassengerId)
