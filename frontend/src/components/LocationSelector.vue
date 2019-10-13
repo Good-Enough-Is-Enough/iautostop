@@ -21,7 +21,7 @@ import { HERE_MAP_APP_ID, HERE_MAP_APP_CODE } from "../constants";
 const CITY = 'Warsaw';
 
 export default {
-    name: "RouteSelector",
+    name: "LocationSelector",
     props: {
       direction: {String},
       disabled: {
@@ -34,7 +34,7 @@ export default {
         entries: [],
         isLoading: false,
         model: null,
-        search: null
+        search: null,
       }
     },
 

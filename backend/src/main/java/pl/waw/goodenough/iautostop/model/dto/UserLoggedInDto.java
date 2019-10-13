@@ -19,4 +19,8 @@ public class UserLoggedInDto {
     private String travelFrom;
     @NotNull(message = "travelTo cannot be null")
     private String travelTo;
+    @NotNull(message = "name cannot be null")
+    private String name;
+    @NotNull(message = "phone cannot be null")
+    private String phone;
 }
