@@ -9,6 +9,7 @@ import pl.waw.goodenough.iautostop.model.entity.AppUser;
 import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
 import pl.waw.goodenough.iautostop.repository.AppUserRepository;
 import pl.waw.goodenough.iautostop.repository.AppUserRouteRepository;
+import pl.waw.goodenough.iautostop.repository.MapApiRepository;
 import pl.waw.goodenough.iautostop.service.RouteService;
 
 import java.util.ArrayList;
@@ -21,10 +22,9 @@ import java.util.Optional;
 public class UserOperations {
 
     private AppUserRepository appUserRepository;
-
     private AppUserRouteRepository appUserRouteRepository;
-
     private RouteService routeService;
+    private MapApiRepository mapApiRepository;
 
     public UserLoggedInDto getUser(final String id) {
 
@@ -54,8 +54,8 @@ public class UserOperations {
 
         appUserRepository.save(appUser);
 
-        CoordinatesDto coordinatesDtoFrom = routeService.getCoordinatesByLocationId(userLoggedInDto.getTravelFrom());
-        CoordinatesDto coordinatesDtoTo = routeService.getCoordinatesByLocationId(userLoggedInDto.getTravelTo());
+        CoordinatesDto coordinatesDtoFrom = mapApiRepository.getCoordinatesByLocationId(userLoggedInDto.getTravelFrom());
+        CoordinatesDto coordinatesDtoTo = mapApiRepository.getCoordinatesByLocationId(userLoggedInDto.getTravelTo());
 
         AppUserRoute appUserRoute = new AppUserRoute();
         appUserRoute.setUserId(userLoggedInDto.getId());
