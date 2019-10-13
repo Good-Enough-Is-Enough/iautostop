@@ -22,7 +22,7 @@
 
 <script lang="js">
 import isEqual from 'lodash/isEqual';
-  import {MAIN_API_PATH, AVAILABLE_PASSENGERS} from "../constants";
+import {MAIN_API_PATH, AVAILABLE_PASSENGERS} from "../constants";
 import {notifyMe} from "../utils/notificationService";
 
 

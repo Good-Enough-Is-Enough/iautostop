@@ -12,7 +12,6 @@
     item-value="API"
     :label="direction"
     placeholder="Start typing to search street"
-    prepend-icon="mdi-magnify"
     return-object
   />
 </template>
@@ -23,7 +22,7 @@ import { HERE_MAP_APP_ID, HERE_MAP_APP_CODE } from "../constants";
 const CITY = 'Warsaw';
 
 export default {
-    name: "RouteSelector",
+    name: "LocationSelector",
     props: {
       direction: {String},
       disabled: {
