@@ -63,13 +63,23 @@ public class UserController {
         return new ResponseEntity<>(streets, OK);
     }
 
-    @DeleteMapping(value = "driver/{driverId}/end-trip")
+    @DeleteMapping(value = "/driver/{driverId}/end-trip")
     public ResponseEntity endTripForDriver(
             @PathVariable(value = "driverId") final String driverId) {
 
         userOperations.endTripForDriver(driverId);
 
         return new ResponseEntity(NO_CONTENT);
+    }
+
+    @PostMapping(value = "/{passengerId}/connectTo/{driverId}")
+    public ResponseEntity<Object> connectPassengerToDriver(
+            @PathVariable(value = "passengerId") final String passengerId,
+            @PathVariable(value = "driverId") final String driverId) {
+
+        userOperations.connectPassengerToDriver(passengerId, driverId);
+
+        return new ResponseEntity<>(CREATED);
     }
 
 }
