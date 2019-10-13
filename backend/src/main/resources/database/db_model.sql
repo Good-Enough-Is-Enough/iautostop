@@ -29,3 +29,9 @@ alter table app_user_route owner to postgres;
 create unique index user_route_user_id_uindex
     on app_user_route (user_id);
 
+create table app_matched_pairs
+(
+	passenger_id varchar(1000) not null,
+	driver_id varchar(1000) not null,
+	insert_date timestamp default NOW() not null
+);
