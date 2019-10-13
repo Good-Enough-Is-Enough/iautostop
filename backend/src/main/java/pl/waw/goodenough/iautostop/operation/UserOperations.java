@@ -237,8 +237,10 @@ public class UserOperations {
             String travelTo = "";
 
             if (appUserRoute.isPresent()) {
-                travelFrom = appUserRoute.get().getTravelFrom();
-                travelTo = appUserRoute.get().getTravelTo();
+                List<String> startEnd = getStreetNamesList(appUserRoute.get());
+
+                travelFrom = startEnd.get(0);
+                travelTo = startEnd.get(1);
             }
 
             passengersConnectedToDriver.add(

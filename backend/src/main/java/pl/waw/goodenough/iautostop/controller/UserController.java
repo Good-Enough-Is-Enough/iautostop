@@ -62,7 +62,7 @@ public class UserController {
 
         final UserLoggedInDto assignedDriver = userOperations.getAssignedDriver(passengerId);
 
-        return new ResponseEntity<UserLoggedInDto>(assignedDriver, OK);
+        return new ResponseEntity<>(assignedDriver, OK);
     }
 
     @GetMapping(value = "/{driverId}/streets")
