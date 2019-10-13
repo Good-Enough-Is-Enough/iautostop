@@ -15,7 +15,7 @@
           @route-select="onRouteSelect($event, 'to')"
         />
         <v-row align="center" justify="center">
-          <v-btn :loading="isLoading" @click="setUserInfo">Let's go!</v-btn>
+          <v-btn :loading="isLoading" @click="setUserInfo">Jedźmy!</v-btn>
         </v-row>
       </v-col>
     </v-container>
@@ -23,13 +23,13 @@
 </template>
 
 <script lang="js">
-import {mask} from 'vue-the-mask'
+import { mask } from "vue-the-mask";
 
 import LocationSelector from "../components/LocationSelector";
 import { SET_USER_INFO } from "../constants";
 
 export default {
-  name: 'set-trip-view',
+  name: 'SetTripView',
   components: {LocationSelector},
   props: {
     id: {String},
@@ -80,6 +80,8 @@ export default {
       })
       .then(() => {
         if (this.role === 'driver') {
+          this.$router.push(`/${this.role}/${this.id}/panel`);
+        } else if (this.role === 'passenger') {
           this.$router.push(`/${this.role}/${this.id}/panel`);
         }
       })

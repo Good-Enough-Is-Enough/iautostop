@@ -22,6 +22,7 @@
     </v-app>
   </div>
 </template>
+
 <style scoped>
 .v-toolbar__title a {
   color: white;
