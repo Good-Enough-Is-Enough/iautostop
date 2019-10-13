@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
+import pl.waw.goodenough.iautostop.model.dto.DriversRouteDto;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.model.entity.AppUser;
 import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
@@ -126,9 +127,16 @@ public class UserOperations {
         appMatchedPairsRepository.deleteById(driverId);
     }
 
-    public List<String> getStreetNamesForDriver(String driverId) {
+    public DriversRouteDto getStreetNamesForDriver(String driverId) {
         AppUserRoute driver = appUserRouteRepository.getDriverById(driverId);
-        return getStreetNamesList(driver);
+        List<String> streetNamesList = getStreetNamesList(driver);
+
+        return DriversRouteDto
+                .builder()
+                .streetNames(streetNamesList)
+                .startCoords(driver.getTravelFrom())
+                .endCoords(driver.getTravelTo())
+                .build();
     }
 
     private List<String> getStreetNamesList(AppUserRoute driver) {
