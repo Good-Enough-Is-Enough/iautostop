@@ -73,6 +73,13 @@ public class UserOperations {
 
             final String routeStreetNames = routeStreetNamesList.toString();
             appUserRoute.setTravelStreetList(routeStreetNames.substring(1, routeStreetNames.length() - 1));
+        } else {
+            List<String> routeStreetNamesList = routeService.getRouteStreetNames(coordinatesDtoFrom, coordinatesDtoTo);
+            String start = routeStreetNamesList.get(0);
+            String end = routeStreetNamesList.get(routeStreetNamesList.size() -1);
+            List<String> startEndNames = Arrays.asList(start, end);
+
+            appUserRoute.setTravelStreetList(String.join(", ", startEndNames));
         }
 
         appUserRouteRepository.save(appUserRoute);
@@ -93,7 +100,11 @@ public class UserOperations {
 
         for (AppUserRoute appUserRoute : passengers) {
 
-            RouteMatcher routeMatcher = new RouteMatcher(driverTravelList, appUserRoute.getTravelFrom(), appUserRoute.getTravelTo());
+            List<String> streets = getStreetNamesList(appUserRoute);
+            String start = streets.get(0);
+            String end = streets.get(1);
+
+            RouteMatcher routeMatcher = new RouteMatcher(driverTravelList, start, end);
 
             if (routeMatcher.match()) {
 
