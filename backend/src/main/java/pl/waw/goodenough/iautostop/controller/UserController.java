@@ -14,7 +14,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @AllArgsConstructor
 public class UserController {
 
