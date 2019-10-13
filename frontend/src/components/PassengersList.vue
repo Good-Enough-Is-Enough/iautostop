@@ -53,15 +53,14 @@ export default {
     getPassengers() {
       this.isLoading = true;
 
-      fetch(getAvailablePassengersUrl(this.id),{
+      fetch(getAvailablePassengersUrl(this.id), {
         headers: {
           'Content-Type': 'application/json',
         }
       })
       .then((res) => res.json())
       .then((res) => {
-
-        if(res.length && !isEqual(this.passengersList, res)) {
+        if (res.length && !isEqual(this.passengersList, res)) {
           notifyMe('New passengers!')
         }
 
