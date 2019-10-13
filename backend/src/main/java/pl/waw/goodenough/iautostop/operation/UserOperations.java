@@ -39,6 +39,8 @@ public class UserOperations {
                     .role(user.get().getRole())
                     .travelFrom(userRoute.get().getTravelFrom())
                     .travelTo(userRoute.get().getTravelTo())
+                    .name(user.get().getName())
+                    .phone(user.get().getPhone())
                     .build();
         }
 
@@ -51,7 +53,8 @@ public class UserOperations {
         AppUser appUser = new AppUser();
         appUser.setId(userLoggedInDto.getId());
         appUser.setRole(userLoggedInDto.getRole());
-
+        appUser.setName(userLoggedInDto.getName());
+        appUser.setPhone(userLoggedInDto.getPhone());
         appUserRepository.save(appUser);
 
         CoordinatesDto coordinatesDtoFrom = mapApiRepository.getCoordinatesByLocationId(userLoggedInDto.getTravelFrom());
@@ -88,6 +91,15 @@ public class UserOperations {
 
             if (routeMatcher.match()) {
 
+                Optional<AppUser> appUser = appUserRepository.findByUserId(appUserRoute.getUserId());
+                String userName = "";
+                String userPhone = "";
+
+                if(appUser.isPresent())  {
+                    userName = appUser.get().getName();
+                    userPhone = appUser.get().getPhone();
+                }
+
                 matchedPassengers.add(
                         UserLoggedInDto
                                 .builder()
@@ -95,6 +107,8 @@ public class UserOperations {
                                 .travelFrom(appUserRoute.getTravelFrom())
                                 .travelTo(appUserRoute.getTravelTo())
                                 .role("passenger")
+                                .name(userName)
+                                .phone(userPhone)
                                 .build()
                 );
             }
@@ -111,5 +125,4 @@ public class UserOperations {
     private List<String> getStreetNamesList(AppUserRoute driver) {
         return Arrays.asList(driver.getTravelStreetList().split(","));
     }
-
 }
