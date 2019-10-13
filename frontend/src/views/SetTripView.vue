@@ -80,7 +80,7 @@ export default {
       })
       .then(() => {
         if (this.role === 'driver') {
-          this.$router.push(`/${this.role}/${this.id}/passengers-list`);
+          this.$router.push(`/${this.role}/${this.id}/panel`);
         } else if (this.role === 'passenger') {
           this.$router.push(`/${this.role}/${this.id}/panel`);
         }
