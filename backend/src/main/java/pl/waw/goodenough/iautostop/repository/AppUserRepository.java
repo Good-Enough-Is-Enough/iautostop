@@ -18,4 +18,9 @@ public interface AppUserRepository extends CrudRepository<AppUser, String> {
     Optional<AppUser> findByUserId(@Param("id") final String id);
 
     void removeAllByIdIn(List<String> id);
+
+    @Query("SELECT u " +
+            " FROM AppUser u " +
+            " WHERE u.id IN :passengers")
+    List<AppUser> selectAllPassengersConnectedToDriver(@Param("passengers") final List<String> passengers);
 }

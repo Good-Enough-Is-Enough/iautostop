@@ -123,6 +123,32 @@ public class UserOperations {
         return matchedPassengers;
     }
 
+    public UserLoggedInDto getAssignedDriver(String passengerId) {
+
+        AppMatchedPairs appMatchedPairs = appMatchedPairsRepository.getByPassengerId(passengerId);
+
+        if (appMatchedPairs == null) {
+            return null;
+        }
+
+        Optional<AppUser> driverOpt = appUserRepository.findByUserId(appMatchedPairs.getDriverId());
+
+        if (!driverOpt.isPresent()) {
+            return null;
+        }
+
+        AppUser driver = driverOpt.get();
+        AppUserRoute driveUserRoute = appUserRouteRepository.getDriverById(driver.getId());
+
+        return UserLoggedInDto.builder()
+                .id(driver.getId())
+                .name(driver.getName())
+                .phone(driver.getPhone())
+                .travelFrom(driveUserRoute.getTravelFrom())
+                .travelTo(driveUserRoute.getTravelTo())
+                .build();
+    }
+
     @Transactional
     public void endTripForDriver(String driverId) {
 
@@ -167,5 +193,48 @@ public class UserOperations {
         appMatchedPairs.setDriverId(driverId);
         appMatchedPairs.setInsertDate(new Date());
         appMatchedPairsRepository.save(appMatchedPairs);
+    }
+
+    public List<UserLoggedInDto> getPassengersConnectedToDriver(final String driverId) {
+
+        final List<AppMatchedPairs> matchedPairs = appMatchedPairsRepository.selectAllByDriverId(driverId);
+        if (matchedPairs.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        final List<String> passengersId = matchedPairs
+                .stream()
+                .map(AppMatchedPairs::getPassengerId)
+                .collect(Collectors.toList());
+
+        final List<AppUser> passengersList = appUserRepository.selectAllPassengersConnectedToDriver(passengersId);
+
+        List<UserLoggedInDto> passengersConnectedToDriver = new ArrayList<>();
+
+        for (AppUser appUser : passengersList) {
+
+            Optional<AppUserRoute> appUserRoute = appUserRouteRepository.findByUserId(appUser.getId());
+            String travelFrom = "";
+            String travelTo = "";
+
+            if (appUserRoute.isPresent()) {
+                travelFrom = appUserRoute.get().getTravelFrom();
+                travelTo = appUserRoute.get().getTravelTo();
+            }
+
+            passengersConnectedToDriver.add(
+                    UserLoggedInDto
+                            .builder()
+                            .id(appUser.getId())
+                            .role(appUser.getRole())
+                            .name(appUser.getName())
+                            .phone(appUser.getPhone())
+                            .travelFrom(travelFrom)
+                            .travelTo(travelTo)
+                            .build()
+            );
+        }
+
+        return passengersConnectedToDriver;
     }
 }
