@@ -40,6 +40,7 @@ public class UserOperations {
                     .travelFrom(userRoute.get().getTravelFrom())
                     .travelTo(userRoute.get().getTravelTo())
                     .name(user.get().getName())
+                    .phone(user.get().getPhone())
                     .build();
         }
 
@@ -53,6 +54,7 @@ public class UserOperations {
         appUser.setId(userLoggedInDto.getId());
         appUser.setRole(userLoggedInDto.getRole());
         appUser.setName(userLoggedInDto.getName());
+        appUser.setPhone(userLoggedInDto.getPhone());
         appUserRepository.save(appUser);
 
         CoordinatesDto coordinatesDtoFrom = mapApiRepository.getCoordinatesByLocationId(userLoggedInDto.getTravelFrom());
@@ -90,9 +92,12 @@ public class UserOperations {
             if (routeMatcher.match()) {
 
                 Optional<AppUser> appUser = appUserRepository.findByUserId(appUserRoute.getUserId());
-                String userName ="";
+                String userName = "";
+                String userPhone = "";
+
                 if(appUser.isPresent())  {
                     userName = appUser.get().getName();
+                    userPhone = appUser.get().getPhone();
                 }
 
                 matchedPassengers.add(
@@ -103,6 +108,7 @@ public class UserOperations {
                                 .travelTo(appUserRoute.getTravelTo())
                                 .role("passenger")
                                 .name(userName)
+                                .phone(userPhone)
                                 .build()
                 );
             }
