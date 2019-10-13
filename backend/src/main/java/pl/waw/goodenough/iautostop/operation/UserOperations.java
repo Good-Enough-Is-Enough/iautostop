@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
+import pl.waw.goodenough.iautostop.model.entity.AppMatchedPair;
 import pl.waw.goodenough.iautostop.model.entity.AppUser;
 import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
 import pl.waw.goodenough.iautostop.repository.AppMatchedPairsRepository;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -115,9 +117,23 @@ public class UserOperations {
 
     @Transactional
     public void endTripForDriver(String driverId) {
+
+        removePassengersPairedWithDriver(driverId);
+
         appUserRouteRepository.deleteById(driverId);
         appUserRepository.deleteById(driverId);
         appMatchedPairsRepository.deleteById(driverId);
+    }
+
+    private void removePassengersPairedWithDriver(String driverId) {
+        List<AppMatchedPair> matchedPairs = appMatchedPairsRepository.selectAllByDriverId(driverId);
+        List<String> passengersId = matchedPairs
+                .stream()
+                .map(AppMatchedPair::getPassengerId)
+                .collect(Collectors.toList());
+        appUserRepository.removeAllByIdIn(passengersId);
+        appUserRouteRepository.removeAllByIdIn(passengersId);
+
     }
 
     public List<String> getStreetNamesForDriver(String driverId) {
