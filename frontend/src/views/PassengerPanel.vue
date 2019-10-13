@@ -22,7 +22,11 @@
       </v-card-text>
     </v-card>
 
-    <v-card v-if="!isLoading && !showError" class="mx-auto card" max-width="500">
+    <v-card
+      v-if="!isLoading && !showError"
+      class="mx-auto card"
+      max-width="500"
+    >
       <v-img
         class="white--text align-end"
         height="200px"
@@ -35,14 +39,18 @@
 
       <v-card-text class="text--primary">
         <div class="driver-info"><strong>DANE KIEROWCY:</strong></div>
-        <div class="driver-info"><v-icon v-text="'mdi-account'" />Stefan</div>
         <div class="driver-info">
-          <v-icon v-text="'mdi-phone'" />555-555-555
+          <v-icon v-text="'mdi-account'" />
+          {{ availableDriver.name }}
+        </div>
+        <div class="driver-info">
+          <v-icon v-text="'mdi-phone'" />
+          {{ availableDriver.phone }}
         </div>
       </v-card-text>
 
       <v-card-actions>
-        <v-btn color="orange" text>
+        <v-btn color="orange" text to="/">
           Wróć do strony głównej
         </v-btn>
       </v-card-actions>
@@ -50,9 +58,9 @@
 
     <v-card v-if="!isLoading && showError" class="mx-auto card" max-width="500">
       <v-img
-              class="white--text align-end"
-              height="200px"
-              src="https://www.elegantthemes.com/blog/wp-content/uploads/2016/03/500-internal-server-error-featured-image-1.png"
+        class="white--text align-end"
+        height="200px"
+        src="https://www.elegantthemes.com/blog/wp-content/uploads/2016/03/500-internal-server-error-featured-image-1.png"
       >
         <v-card-title>
           <strong>Popsuło się :(</strong>
@@ -86,7 +94,7 @@ export default {
   },
   data() {
     return {
-      availableDriver: {},
+      availableDriver: null,
       isLoading: false,
       intervalId: null,
       showError: false
@@ -107,9 +115,16 @@ export default {
       })
       .then((res) => {
         console.log(res);
+        this.availableDriver = res;
+        window.clearInterval(this.intervalId);
+
+        setTimeout(() => {
+            this.isLoading = false;
+        }, 5000);
       })
       .catch((err) => {
         console.log(err);
+        window.clearInterval(this.intervalId);
         this.isLoading = false;
         this.showError = true;
       })
