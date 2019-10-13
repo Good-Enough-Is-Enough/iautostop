@@ -17,4 +17,6 @@ public interface AppMatchedPairsRepository extends CrudRepository<AppMatchedPair
     List<AppMatchedPairs> selectAllByDriverId(@Param("driverId") String driverId);
 
     AppMatchedPairs getByPassengerId(@Param("passenger_id") String passengerId);
+
+    void deleteByDriverId(String driverId);
 }
