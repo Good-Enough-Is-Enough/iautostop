@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import pl.waw.goodenough.iautostop.model.dto.DriversRouteDto;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.operation.UserOperations;
 
@@ -14,7 +15,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
 
@@ -56,10 +57,30 @@ public class UserController {
     }
 
     @GetMapping(value = "/{driverId}/streets")
-    public ResponseEntity<List<String>> getStreetsForDriversRoute(
+    public ResponseEntity<DriversRouteDto> getStreetsForDriversRoute(
             @PathVariable(value = "driverId") final String driverId) {
 
-        final List<String> streets = userOperations.getStreetNamesForDriver(driverId);
+        final DriversRouteDto streets = userOperations.getStreetNamesForDriver(driverId);
         return new ResponseEntity<>(streets, OK);
     }
+
+    @DeleteMapping(value = "/driver/{driverId}/end-trip")
+    public ResponseEntity endTripForDriver(
+            @PathVariable(value = "driverId") final String driverId) {
+
+        userOperations.endTripForDriver(driverId);
+
+        return new ResponseEntity(NO_CONTENT);
+    }
+
+    @PostMapping(value = "/{passengerId}/connectTo/{driverId}")
+    public ResponseEntity<Object> connectPassengerToDriver(
+            @PathVariable(value = "passengerId") final String passengerId,
+            @PathVariable(value = "driverId") final String driverId) {
+
+        userOperations.connectPassengerToDriver(passengerId, driverId);
+
+        return new ResponseEntity<>(CREATED);
+    }
+
 }

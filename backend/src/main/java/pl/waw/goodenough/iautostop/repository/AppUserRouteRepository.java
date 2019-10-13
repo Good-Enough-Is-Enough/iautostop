@@ -20,8 +20,9 @@ public interface AppUserRouteRepository extends CrudRepository<AppUserRoute, Str
     @Query(" SELECT ur " +
             "FROM AppUserRoute ur " +
             "JOIN AppUser u ON u.id = ur.userId " +
-            "WHERE u.role = 'passenger' ")
-    List<AppUserRoute> findAllPassengers();
+            "WHERE u.role = 'passenger' " +
+            "AND u.id NOT IN (SELECT mp.passengerId FROM AppMatchedPairs mp) ")
+    List<AppUserRoute> findAllAvailablePassengers();
 
     @Query("SELECT ur " +
             "FROM AppUserRoute ur " +
@@ -29,4 +30,6 @@ public interface AppUserRouteRepository extends CrudRepository<AppUserRoute, Str
             "WHERE ur.userId= :id " +
             "  AND u.role = 'driver'")
     AppUserRoute getDriverById(@Param("id") final String id);
+
+    void removeAllByUserIdIn(List<String> id);
 }

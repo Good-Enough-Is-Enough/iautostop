@@ -1,5 +1,8 @@
 <template>
-  <v-content>
+  <div>
+    <p v-if="!passengersList.length" class="text-justify">
+      W tym momencie nikt nie czeka na podwózkę
+    </p>
     <v-overlay :value="isLoading">
       <v-progress-circular indeterminate size="64" />
     </v-overlay>
@@ -17,21 +20,20 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
-  </v-content>
+  </div>
 </template>
 
 <script lang="js">
-import isEqual from 'lodash/isEqual';
-import {MAIN_API_PATH, AVAILABLE_PASSENGERS} from "../constants";
+import isEqual from "lodash/isEqual";
+import {getAvailablePassengersUrl} from "../constants";
 import {notifyMe} from "../utils/notificationService";
 
 
 export default {
-  name: 'passengers-list-view',
+  name: 'PassengersListView',
   components: {},
   props: {
     id: {String},
-    role: {String}
   },
   data() {
     return {
@@ -51,7 +53,7 @@ export default {
     getPassengers() {
       this.isLoading = true;
 
-      fetch(`${MAIN_API_PATH}/${this.id}${AVAILABLE_PASSENGERS}`,{
+      fetch(getAvailablePassengersUrl(this.id),{
         headers: {
           'Content-Type': 'application/json',
         }
