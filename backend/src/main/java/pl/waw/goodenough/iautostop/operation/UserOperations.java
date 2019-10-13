@@ -123,6 +123,32 @@ public class UserOperations {
         return matchedPassengers;
     }
 
+    public UserLoggedInDto getAssignedDriver(String passengerId) {
+
+        AppMatchedPairs appMatchedPairs = appMatchedPairsRepository.getByPassengerId(passengerId);
+
+        if (appMatchedPairs == null) {
+            return null;
+        }
+
+        Optional<AppUser> driverOpt = appUserRepository.findByUserId(appMatchedPairs.getDriverId());
+
+        if (!driverOpt.isPresent()) {
+            return null;
+        }
+
+        AppUser driver = driverOpt.get();
+        AppUserRoute driveUserRoute = appUserRouteRepository.getDriverById(driver.getId());
+
+        return UserLoggedInDto.builder()
+                .id(driver.getId())
+                .name(driver.getName())
+                .phone(driver.getPhone())
+                .travelFrom(driveUserRoute.getTravelFrom())
+                .travelTo(driveUserRoute.getTravelTo())
+                .build();
+    }
+
     @Transactional
     public void endTripForDriver(String driverId) {
 
