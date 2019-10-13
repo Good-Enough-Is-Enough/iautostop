@@ -42,10 +42,12 @@ export default {
 
   computed: {
     items () {
-      return this.entries.map((entry) => {
-        const Description = entry.address.street.replace('ulica', 'ul. ');
+      return this.entries
+        .filter(entry => entry.address.street)
+        .map(entry => {
+          const Description = entry.address.street.replace('ulica', 'ul. ');
 
-        return Object.assign({}, entry, { Description })
+          return Object.assign({}, entry, { Description })
       })
     },
   },
