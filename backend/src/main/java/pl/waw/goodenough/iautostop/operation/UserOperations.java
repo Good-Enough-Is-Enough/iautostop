@@ -81,6 +81,10 @@ public class UserOperations {
     public List<UserLoggedInDto> getAvailablePassengers(String driverId) {
 
         final AppUserRoute driver = appUserRouteRepository.getDriverById(driverId);
+        if (driver == null) {
+            return Collections.emptyList();
+        }
+
         final List<AppUserRoute> passengers = appUserRouteRepository.findAllAvailablePassengers();
 
         List<UserLoggedInDto> matchedPassengers = new ArrayList<>();
