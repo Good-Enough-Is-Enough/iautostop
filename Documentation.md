@@ -6,7 +6,9 @@
       id: String,
       role: String,
       travelFrom: String,
-      travelTo: String
+      travelTo: String,
+      name: String,
+      phone: String
     }
 
 role: driver, passenger
