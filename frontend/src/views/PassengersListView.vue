@@ -21,7 +21,10 @@
 </template>
 
 <script lang="js">
-import {AVAILABLE_PASSENGERS} from "../constants";
+import isEqual from 'lodash/isEqual';
+  import {MAIN_API_PATH, AVAILABLE_PASSENGERS} from "../constants";
+import {notifyMe} from "../utils/notificationService";
+
 
 export default {
   name: 'passengers-list-view',
@@ -33,11 +36,13 @@ export default {
   data() {
     return {
       isLoading: false,
-      passengersList: []
+      passengersList: [],
+      intervalId: null,
     }
   },
   mounted() {
     this.getPassengers();
+    this.intervalId = window.setInterval(this.getPassengers, 5000);
   },
   methods: {
     selectPassenger() {
@@ -46,13 +51,18 @@ export default {
     getPassengers() {
       this.isLoading = true;
 
-      fetch(`/${this.id}${AVAILABLE_PASSENGERS}`,{
+      fetch(`${MAIN_API_PATH}/${this.id}${AVAILABLE_PASSENGERS}`,{
         headers: {
           'Content-Type': 'application/json',
         }
       })
       .then((res) => res.json())
       .then((res) => {
+
+        if(res.length && !isEqual(this.passengersList, res)) {
+          notifyMe('New passengers!')
+        }
+
         this.passengersList = res;
       })
       .catch((err) => {
