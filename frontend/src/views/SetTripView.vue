@@ -2,8 +2,8 @@
   <v-content>
     <v-container class="fill-height" fluid>
       <v-col cols="12">
-        <v-text-field label="Name" v-model="name"/>
-        <v-text-field label="Phone" v-model="phone" v-mask="phoneMask"/>
+        <v-text-field label="Name" v-model="name" />
+        <v-text-field label="Phone" v-model="phone" v-mask="phoneMask" />
         <location-selector
           :disabled="isLoading"
           :direction="'From'"
@@ -59,11 +59,13 @@ export default {
       this.user = {
         id: this.id,
         role: this.role,
+        name: this.name,
+        phone: this.phone,
         travelFrom: this.travelFrom,
         travelTo: this.travelTo
       };
 
-      if (!this.travelFrom || !this.travelTo || !this.name || !name.length) {
+      if (!this.travelFrom || !this.travelTo || !this.name || !this.name.length) {
         return;
       }
 
@@ -78,7 +80,7 @@ export default {
       })
       .then(() => {
         if (this.role === 'driver') {
-          this.$router.push(`/${this.role}/${this.id}/passengers-list`);
+          this.$router.push(`/${this.role}/${this.id}/panel`);
         }
       })
       .catch((err) => {
