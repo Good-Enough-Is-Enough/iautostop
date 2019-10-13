@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-if="!passengersList.length" class="text-justify">
+    <p v-if="!passengersList.length" class="text-center">
       W tym momencie nikt nie czeka na podwózkę
     </p>
     <v-overlay :value="isLoading">
@@ -16,7 +16,10 @@
           <v-icon v-text="'mdi-account'" />
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title v-text="passenger.travelTo" />
+          <v-list-item-title v-text="passenger.name" />
+          <v-list-item-subtitle
+            v-html="`Z: ${passenger.travelTo}, do: ${passenger.travelFrom}`"
+          ></v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
