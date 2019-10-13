@@ -15,4 +15,6 @@ public interface AppMatchedPairsRepository extends CrudRepository<AppMatchedPair
             "FROM AppMatchedPairs mp " +
             "WHERE mp.driverId = :driverId")
     List<AppMatchedPairs> selectAllByDriverId(@Param("driverId") String driverId);
+
+    AppMatchedPairs getByPassengerId(@Param("passenger_id") String passengerId);
 }
