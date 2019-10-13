@@ -10,9 +10,7 @@
     hide-selected
     item-text="Description"
     item-value="API"
-    :label="direction"
-    placeholder="Start typing to search street"
-    prepend-icon="mdi-magnify"
+    :placeholder="placeholder"
     return-object
   />
 </template>
@@ -36,7 +34,7 @@ export default {
         entries: [],
         isLoading: false,
         model: null,
-        search: null,
+        search: null
       }
     },
 
@@ -50,6 +48,9 @@ export default {
           return Object.assign({}, entry, { Description })
       })
     },
+    placeholder() {
+      return this.direction === 'To' ? 'Dokąd jedziesz?' : 'Skąd jedziesz?'
+    }
   },
 
   watch: {
