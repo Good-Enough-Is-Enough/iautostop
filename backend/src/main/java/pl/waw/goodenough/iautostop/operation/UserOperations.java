@@ -71,18 +71,21 @@ public class UserOperations {
 
             List<String> routeStreetNamesList = routeService.getRouteStreetNames(coordinatesDtoFrom, coordinatesDtoTo);
 
-            final String routeStreetNames = routeStreetNamesList.toString();
-            appUserRoute.setTravelStreetList(routeStreetNames.substring(1, routeStreetNames.length() - 1));
+            appUserRoute.setTravelStreetList(streetsListToString(routeStreetNamesList));
         } else {
             List<String> routeStreetNamesList = routeService.getRouteStreetNames(coordinatesDtoFrom, coordinatesDtoTo);
             String start = routeStreetNamesList.get(0);
             String end = routeStreetNamesList.get(routeStreetNamesList.size() -1);
             List<String> startEndNames = Arrays.asList(start, end);
 
-            appUserRoute.setTravelStreetList(String.join(", ", startEndNames));
+            appUserRoute.setTravelStreetList(streetsListToString(startEndNames));
         }
 
         appUserRouteRepository.save(appUserRoute);
+    }
+
+    private String streetsListToString(List<String> streets) {
+        return String.join(",", streets);
     }
 
     public List<UserLoggedInDto> getAvailablePassengers(String driverId) {
