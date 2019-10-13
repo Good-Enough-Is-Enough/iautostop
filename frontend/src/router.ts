@@ -24,6 +24,12 @@ export default new Router({
       name: "PassengersListView",
       props: true,
       component: () => import("./views/PassengersListView.vue")
+    },
+    {
+      path: "/:passenger/:id/panel",
+      name: "PassengerPanel",
+      props: true,
+      component: () => import("./views/PassengerPanel.vue")
     }
   ]
 });
