@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
 import pl.waw.goodenough.iautostop.model.dto.DriversRouteDto;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
+import pl.waw.goodenough.iautostop.model.entity.AppMatchedPairs;
 import pl.waw.goodenough.iautostop.model.entity.AppUser;
 import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
 import pl.waw.goodenough.iautostop.repository.AppMatchedPairsRepository;
@@ -14,10 +15,8 @@ import pl.waw.goodenough.iautostop.repository.AppUserRouteRepository;
 import pl.waw.goodenough.iautostop.repository.MapApiRepository;
 import pl.waw.goodenough.iautostop.service.RouteService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -98,7 +97,7 @@ public class UserOperations {
                 String userName = "";
                 String userPhone = "";
 
-                if(appUser.isPresent())  {
+                if (appUser.isPresent()) {
                     userName = appUser.get().getName();
                     userPhone = appUser.get().getPhone();
                 }
@@ -122,9 +121,23 @@ public class UserOperations {
 
     @Transactional
     public void endTripForDriver(String driverId) {
+
+        removePassengersPairedWithDriver(driverId);
+
         appUserRouteRepository.deleteById(driverId);
         appUserRepository.deleteById(driverId);
         appMatchedPairsRepository.deleteById(driverId);
+    }
+
+    private void removePassengersPairedWithDriver(String driverId) {
+        List<AppMatchedPairs> matchedPairs = appMatchedPairsRepository.selectAllByDriverId(driverId);
+        List<String> passengersId = matchedPairs
+                .stream()
+                .map(AppMatchedPairs::getPassengerId)
+                .collect(Collectors.toList());
+        appUserRepository.removeAllByIdIn(passengersId);
+        appUserRouteRepository.removeAllByUserIdIn(passengersId);
+
     }
 
     public DriversRouteDto getStreetNamesForDriver(String driverId) {
@@ -141,5 +154,14 @@ public class UserOperations {
 
     private List<String> getStreetNamesList(AppUserRoute driver) {
         return Arrays.asList(driver.getTravelStreetList().split(","));
+    }
+
+    public void connectPassengerToDriver(final String passengerId, final String driverId) {
+
+        AppMatchedPairs appMatchedPairs = new AppMatchedPairs();
+        appMatchedPairs.setPassengerId(passengerId);
+        appMatchedPairs.setDriverId(driverId);
+        appMatchedPairs.setInsertDate(new Date());
+        appMatchedPairsRepository.save(appMatchedPairs);
     }
 }
