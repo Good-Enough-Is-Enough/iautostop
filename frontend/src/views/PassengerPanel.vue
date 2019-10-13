@@ -84,6 +84,7 @@
 </template>
 
 <script lang="js">
+import {notifyMe} from "../utils/notificationService";
 import { getAvailableDriver } from "../constants";
 
 export default {
@@ -94,7 +95,10 @@ export default {
   },
   data() {
     return {
-      availableDriver: null,
+      availableDriver: {
+        name: null,
+        phone: null
+      },
       isLoading: false,
       intervalId: null,
       showError: false
@@ -116,20 +120,21 @@ export default {
           'Content-Type': 'application/json',
         }
       })
+      .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         this.availableDriver = res;
         window.clearInterval(this.intervalId);
 
         setTimeout(() => {
-            this.isLoading = false;
+          this.isLoading = false;
+          notifyMe('Podwózka zaakceptowana!');
         }, 5000);
       })
       .catch((err) => {
         console.log(err);
-        window.clearInterval(this.intervalId);
-        this.isLoading = false;
-        this.showError = true;
+        // window.clearInterval(this.intervalId);
+        // this.isLoading = false;
+        // this.showError = true;
       })
     }
   }
