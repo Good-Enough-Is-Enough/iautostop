@@ -15,6 +15,7 @@ import pl.waw.goodenough.iautostop.repository.MapApiRepository;
 import pl.waw.goodenough.iautostop.service.RouteService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -128,13 +129,13 @@ public class UserOperations {
     }
 
     private void removePassengersPairedWithDriver(String driverId) {
-        List<AppMatchedPair> matchedPairs = appMatchedPairsRepository.selectAllByDriverId(driverId);
+        List<AppMatchedPairs> matchedPairs = appMatchedPairsRepository.selectAllByDriverId(driverId);
         List<String> passengersId = matchedPairs
                 .stream()
-                .map(AppMatchedPair::getPassengerId)
+                .map(AppMatchedPairs::getPassengerId)
                 .collect(Collectors.toList());
         appUserRepository.removeAllByIdIn(passengersId);
-        appUserRouteRepository.removeAllByIdIn(passengersId);
+        appUserRouteRepository.removeAllByUserIdIn(passengersId);
 
     }
 
