@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
-import pl.waw.goodenough.iautostop.model.entity.AppMatchedPair;
+import pl.waw.goodenough.iautostop.model.entity.AppMatchedPairs;
 import pl.waw.goodenough.iautostop.model.entity.AppUser;
 import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
 import pl.waw.goodenough.iautostop.repository.AppMatchedPairsRepository;
@@ -14,11 +14,7 @@ import pl.waw.goodenough.iautostop.repository.AppUserRouteRepository;
 import pl.waw.goodenough.iautostop.repository.MapApiRepository;
 import pl.waw.goodenough.iautostop.service.RouteService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -83,7 +79,7 @@ public class UserOperations {
     public List<UserLoggedInDto> getAvailablePassengers(String driverId) {
 
         final AppUserRoute driver = appUserRouteRepository.getDriverById(driverId);
-        final List<AppUserRoute> passengers = appUserRouteRepository.findAllPassengers();
+        final List<AppUserRoute> passengers = appUserRouteRepository.findAllAvailablePassengers();
 
         List<UserLoggedInDto> matchedPassengers = new ArrayList<>();
 
@@ -99,7 +95,7 @@ public class UserOperations {
                 String userName = "";
                 String userPhone = "";
 
-                if(appUser.isPresent())  {
+                if (appUser.isPresent()) {
                     userName = appUser.get().getName();
                     userPhone = appUser.get().getPhone();
                 }
@@ -149,5 +145,14 @@ public class UserOperations {
 
     private List<String> getStreetNamesList(AppUserRoute driver) {
         return Arrays.asList(driver.getTravelStreetList().split(","));
+    }
+
+    public void connectPassengerToDriver(final String passengerId, final String driverId) {
+
+        AppMatchedPairs appMatchedPairs = new AppMatchedPairs();
+        appMatchedPairs.setPassengerId(passengerId);
+        appMatchedPairs.setDriverId(driverId);
+        appMatchedPairs.setInsertDate(new Date());
+        appMatchedPairsRepository.save(appMatchedPairs);
     }
 }
