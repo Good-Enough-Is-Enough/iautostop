@@ -2,8 +2,12 @@
   <v-content>
     <v-container class="fill-height" fluid>
       <v-col cols="12">
-        <v-text-field label="Name" v-model="name" />
-        <v-text-field label="Phone" v-model="phone" v-mask="phoneMask" />
+        <v-text-field placeholder="Podaj swoje imię" v-model="name" />
+        <v-text-field
+          placeholder="Numer telefonu"
+          v-model="phone"
+          v-mask="phoneMask"
+        />
         <location-selector
           :disabled="isLoading"
           :direction="'From'"
