@@ -15,4 +15,5 @@ public class AppUser {
     private String id;
     private String role;
     private String name;
+    private String phone;
 }

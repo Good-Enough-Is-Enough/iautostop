@@ -2,12 +2,14 @@
   <v-content>
     <v-container class="fill-height" fluid>
       <v-col cols="12">
-        <route-selector
+        <v-text-field label="Name" v-model="name"/>
+        <v-text-field label="Phone" v-model="phone" v-mask="phoneMask"/>
+        <location-selector
           :disabled="isLoading"
           :direction="'From'"
           @route-select="onRouteSelect($event, 'from')"
         />
-        <route-selector
+        <location-selector
           :disabled="isLoading"
           :direction="'To'"
           @route-select="onRouteSelect($event, 'to')"
@@ -21,22 +23,30 @@
 </template>
 
 <script lang="js">
-import RouteSelector from "../components/RouteSelector";
+import {mask} from 'vue-the-mask'
+
+import LocationSelector from "../components/LocationSelector";
 import { SET_USER_INFO } from "../constants";
 
 export default {
   name: 'set-trip-view',
-  components: {RouteSelector},
+  components: {LocationSelector},
   props: {
     id: {String},
     role: {String}
+  },
+  directives: {
+    mask,
   },
   data() {
     return {
       isLoading: false,
       user: {},
-      travelFrom: '',
-      travelTo: ''
+      name: null,
+      phone: null,
+      phoneMask: '###-###-###',
+      travelFrom: null,
+      travelTo: null
     }
   },
   methods: {
@@ -53,7 +63,7 @@ export default {
         travelTo: this.travelTo
       };
 
-      if (!this.travelFrom || !this.travelTo) {
+      if (!this.travelFrom || !this.travelTo || !this.name || !name.length) {
         return;
       }
 
