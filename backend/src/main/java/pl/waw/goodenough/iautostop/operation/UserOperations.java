@@ -119,9 +119,23 @@ public class UserOperations {
 
     @Transactional
     public void endTripForDriver(String driverId) {
+
+        removePassengersPairedWithDriver(driverId);
+
         appUserRouteRepository.deleteById(driverId);
         appUserRepository.deleteById(driverId);
         appMatchedPairsRepository.deleteById(driverId);
+    }
+
+    private void removePassengersPairedWithDriver(String driverId) {
+        List<AppMatchedPair> matchedPairs = appMatchedPairsRepository.selectAllByDriverId(driverId);
+        List<String> passengersId = matchedPairs
+                .stream()
+                .map(AppMatchedPair::getPassengerId)
+                .collect(Collectors.toList());
+        appUserRepository.removeAllByIdIn(passengersId);
+        appUserRouteRepository.removeAllByIdIn(passengersId);
+
     }
 
     public List<String> getStreetNamesForDriver(String driverId) {
