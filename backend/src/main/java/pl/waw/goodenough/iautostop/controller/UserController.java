@@ -83,4 +83,12 @@ public class UserController {
         return new ResponseEntity<>(CREATED);
     }
 
+    @GetMapping(value = "/connectedTo/{driverId}")
+    public ResponseEntity<List<UserLoggedInDto>> getPassengersConnectedToDriver(
+            @PathVariable(value = "driverId") final String driverId) {
+
+        final List<UserLoggedInDto> connectedPassengersToDriver = userOperations.getPassengersConnectedToDriver(driverId);
+
+        return new ResponseEntity<>(connectedPassengersToDriver, OK);
+    }
 }
