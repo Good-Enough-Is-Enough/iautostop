@@ -104,6 +104,9 @@ export default {
     this.getDriver();
     this.intervalId = window.setInterval(this.getDriver, 5000);
   },
+  destroyed() {
+    window.clearInterval(this.intervalId);
+  },
   methods: {
     getDriver() {
       this.isLoading = true;
