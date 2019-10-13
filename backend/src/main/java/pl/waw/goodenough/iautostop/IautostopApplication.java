@@ -6,7 +6,9 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 import pl.waw.goodenough.iautostop.repository.HereMapApiRepository;
+import pl.waw.goodenough.iautostop.repository.HereRouteRepository;
 import pl.waw.goodenough.iautostop.repository.MapApiRepository;
+import pl.waw.goodenough.iautostop.repository.RouteApiRepository;
 
 @SpringBootApplication
 public class IautostopApplication {
@@ -21,7 +23,12 @@ public class IautostopApplication {
     }
 
     @Bean
-    public MapApiRepository routeRepository(RestTemplate restTemplate){
+    public RouteApiRepository routeRepository(RestTemplate restTemplate) {
+        return new HereRouteRepository(restTemplate);
+    }
+
+    @Bean
+    public MapApiRepository mapApiRepository(RestTemplate restTemplate) {
         return new HereMapApiRepository(restTemplate);
     }
 }
