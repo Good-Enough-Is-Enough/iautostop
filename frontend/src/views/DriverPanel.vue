@@ -9,13 +9,9 @@
             </v-btn>
           </div>
         </v-col>
-      </v-row>
-      <v-row no-gutters>
         <v-col cols="12">
           <route-map :from="from" :to="to" v-show="showMap" />
         </v-col>
-      </v-row>
-      <v-row no-gutters>
         <v-col cols="12">
           <passengers-list-view :id="id" />
         </v-col>
