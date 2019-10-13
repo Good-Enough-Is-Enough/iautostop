@@ -28,6 +28,7 @@ export default {
 
 <style scoped>
 img {
-  height: calc(100vh - 150px);
+  max-height: calc(100vh - 150px);
+  max-width: 100%;
 }
 </style>
