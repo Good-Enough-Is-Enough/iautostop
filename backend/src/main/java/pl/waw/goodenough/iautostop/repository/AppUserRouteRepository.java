@@ -21,7 +21,7 @@ public interface AppUserRouteRepository extends CrudRepository<AppUserRoute, Str
             "FROM AppUserRoute ur " +
             "JOIN AppUser u ON u.id = ur.userId " +
             "WHERE u.role = 'passenger' " +
-            "AND u.id NOT IN (SELECT mp.passengerId FROM AppMatchedPair mp) ")
+            "AND u.id NOT IN (SELECT mp.passengerId FROM AppMatchedPairs mp) ")
     List<AppUserRoute> findAllPassengers();
 
     @Query("SELECT ur " +
