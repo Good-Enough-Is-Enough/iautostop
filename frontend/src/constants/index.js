@@ -16,3 +16,6 @@ export const connectTo = (passengerId, driverId) =>
 
 export const getConnectedPassengers = driverId =>
   `${MAIN_API_PATH}${API_CONNECT}/${driverId}`;
+
+export const getEndTripUrl = driverId =>
+  `${MAIN_API_PATH}/driver/${driverId}/end-trip`;
