@@ -1,11 +1,13 @@
 package pl.waw.goodenough.iautostop.repository;
 
+import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,11 +34,16 @@ public class HereRouteRepository implements RouteApiRepository {
         String url = URL + "?" + "app_id=" + APP_ID + "&app_code=" + APP_CODE + "&waypoint0=" + travelFrom + "&waypoint1=" +
                 travelTo + "&mode=" + MODE + "&maneuverAttributes=" + MANOUVER_ATTRIBUTES;
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        String jsonPath = "$['response']['route'][0]['leg'][0]['maneuver'][*]['roadName']";
+        String jsonPathForRoute = "$['response']['route'][0]['leg'][0]['maneuver'][*]['roadName']";
+        String jsonPathForStartPoint = "$['response']['route'][0]['waypoint'][0]['mappedRoadName']";
+        String jsonPathForEndPoint = "$['response']['route'][0]['waypoint'][1]['mappedRoadName']";
         String route = response.getBody();
-        List<String> streets = JsonPath
-                .parse(route)
-                .read(jsonPath);
+        DocumentContext responseJsonCotext = JsonPath
+                .parse(route);
+        List<String> streets = new ArrayList<>();
+        streets.add(responseJsonCotext.read(jsonPathForStartPoint));
+        streets.addAll(responseJsonCotext.read(jsonPathForRoute));
+        streets.add(responseJsonCotext.read(jsonPathForEndPoint));
 
         Set<String> noDuplicateStreets = new LinkedHashSet<>(streets);
 
