@@ -33,5 +33,5 @@ create table app_matched_pairs
 (
 	passenger_id varchar(1000) not null,
 	driver_id varchar(1000) not null,
-	"current_timestamp" timestamp default NOW() not null
+	insert_date timestamp default NOW() not null
 );
