@@ -30,4 +30,6 @@ public interface AppUserRouteRepository extends CrudRepository<AppUserRoute, Str
             "WHERE ur.userId= :id " +
             "  AND u.role = 'driver'")
     AppUserRoute getDriverById(@Param("id") final String id);
+
+    void removeAllByUserIdIn(List<String> id);
 }

@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.waw.goodenough.iautostop.model.entity.AppUser;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,4 +16,6 @@ public interface AppUserRepository extends CrudRepository<AppUser, String> {
             " FROM AppUser u" +
             " WHERE u.id= :id")
     Optional<AppUser> findByUserId(@Param("id") final String id);
+
+    void removeAllByIdIn(List<String> id);
 }
