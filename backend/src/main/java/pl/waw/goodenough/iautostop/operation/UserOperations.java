@@ -168,4 +168,47 @@ public class UserOperations {
         appMatchedPairs.setInsertDate(new Date());
         appMatchedPairsRepository.save(appMatchedPairs);
     }
+
+    public List<UserLoggedInDto> getPassengersConnectedToDriver(final String driverId) {
+
+        final List<AppMatchedPairs> matchedPairs = appMatchedPairsRepository.selectAllByDriverId(driverId);
+        if (matchedPairs.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        final List<String> passengersId = matchedPairs
+                .stream()
+                .map(AppMatchedPairs::getPassengerId)
+                .collect(Collectors.toList());
+
+        final List<AppUser> passengersList = appUserRepository.selectAllPassengersConnectedToDriver(passengersId);
+
+        List<UserLoggedInDto> passengersConnectedToDriver = new ArrayList<>();
+
+        for (AppUser appUser : passengersList) {
+
+            Optional<AppUserRoute> appUserRoute = appUserRouteRepository.findByUserId(appUser.getId());
+            String travelFrom = "";
+            String travelTo = "";
+
+            if (appUserRoute.isPresent()) {
+                travelFrom = appUserRoute.get().getTravelFrom();
+                travelTo = appUserRoute.get().getTravelTo();
+            }
+
+            passengersConnectedToDriver.add(
+                    UserLoggedInDto
+                            .builder()
+                            .id(appUser.getId())
+                            .role(appUser.getRole())
+                            .name(appUser.getName())
+                            .phone(appUser.getPhone())
+                            .travelFrom(travelFrom)
+                            .travelTo(travelTo)
+                            .build()
+            );
+        }
+
+        return passengersConnectedToDriver;
+    }
 }
