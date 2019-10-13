@@ -7,6 +7,7 @@ import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.model.entity.AppUser;
 import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
+import pl.waw.goodenough.iautostop.repository.AppMatchedPairsRepository;
 import pl.waw.goodenough.iautostop.repository.AppUserRepository;
 import pl.waw.goodenough.iautostop.repository.AppUserRouteRepository;
 import pl.waw.goodenough.iautostop.repository.MapApiRepository;
@@ -25,6 +26,7 @@ public class UserOperations {
     private AppUserRouteRepository appUserRouteRepository;
     private RouteService routeService;
     private MapApiRepository mapApiRepository;
+    private AppMatchedPairsRepository appMatchedPairsRepository;
 
     public UserLoggedInDto getUser(final String id) {
 
@@ -115,6 +117,13 @@ public class UserOperations {
         }
 
         return matchedPassengers;
+    }
+
+    @Transactional
+    public void endTripForDriver(String driverId) {
+        appUserRouteRepository.deleteById(driverId);
+        appUserRepository.deleteById(driverId);
+        appMatchedPairsRepository.deleteById(driverId);
     }
 
     public List<String> getStreetNamesForDriver(String driverId) {

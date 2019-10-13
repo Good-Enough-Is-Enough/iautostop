@@ -62,4 +62,14 @@ public class UserController {
         final List<String> streets = userOperations.getStreetNamesForDriver(driverId);
         return new ResponseEntity<>(streets, OK);
     }
+
+    @DeleteMapping(value = "driver/{driverId}/end-trip")
+    public ResponseEntity endTripForDriver(
+            @PathVariable(value = "driverId") final String driverId) {
+
+        userOperations.endTripForDriver(driverId);
+
+        return new ResponseEntity(NO_CONTENT);
+    }
+
 }
