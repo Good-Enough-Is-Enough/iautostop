@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import pl.waw.goodenough.iautostop.model.dto.DriversRouteDto;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
 import pl.waw.goodenough.iautostop.operation.UserOperations;
 
@@ -56,10 +57,10 @@ public class UserController {
     }
 
     @GetMapping(value = "/{driverId}/streets")
-    public ResponseEntity<List<String>> getStreetsForDriversRoute(
+    public ResponseEntity<DriversRouteDto> getStreetsForDriversRoute(
             @PathVariable(value = "driverId") final String driverId) {
 
-        final List<String> streets = userOperations.getStreetNamesForDriver(driverId);
+        final DriversRouteDto streets = userOperations.getStreetNamesForDriver(driverId);
         return new ResponseEntity<>(streets, OK);
     }
 
