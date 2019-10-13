@@ -24,6 +24,12 @@ export default new Router({
       name: "DriverPanelView",
       props: true,
       component: () => import("./views/DriverPanel.vue")
+    },
+    {
+      path: "/passenger/:id/panel",
+      name: "PassengerPanel",
+      props: true,
+      component: () => import("./views/PassengerPanel.vue")
     }
   ]
 });

@@ -10,11 +10,11 @@
         >
           <v-btn block x-large :to="`/driver/${generateUserId()}/new-trip`">
             <v-icon class="home-page-icon" v-text="'mdi-car'" />
-            I'm a Driver
+            Chcę zabrać pasażerów
           </v-btn>
           <v-btn block x-large :to="`/passenger/${generateUserId()}/new-trip`">
             <v-icon class="home-page-icon" v-text="'mdi-account-clock'" />
-            I'm a Passenger
+            Potrzebuję podwózki
           </v-btn>
         </v-row>
       </v-col>
@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .home-page-icon {
   margin-right: 12px;
 }
