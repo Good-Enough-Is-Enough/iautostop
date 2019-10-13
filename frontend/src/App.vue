@@ -3,8 +3,12 @@
     <v-app id="inspire">
       <div>
         <v-app-bar color="red accent-4" dark>
-          <img alt="Vue logo" src="./assets/logo.png" height="50px" />
-          <v-toolbar-title>iAutostop</v-toolbar-title>
+          <router-link to="/">
+            <img alt="Vue logo" src="./assets/logo.png" height="50px" />
+          </router-link>
+          <v-toolbar-title>
+            <router-link to="/" class="toolbar-title">iAutostop</router-link>
+          </v-toolbar-title>
         </v-app-bar>
 
         <router-view />
@@ -18,3 +22,10 @@
     </v-app>
   </div>
 </template>
+
+<style scoped>
+.v-toolbar__title a {
+  color: white;
+  text-decoration: none;
+}
+</style>

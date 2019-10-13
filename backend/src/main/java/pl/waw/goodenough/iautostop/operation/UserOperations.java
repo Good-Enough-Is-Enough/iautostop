@@ -172,17 +172,20 @@ public class UserOperations {
 
         appUserRouteRepository.deleteById(driverId);
         appUserRepository.deleteById(driverId);
-        appMatchedPairsRepository.deleteById(driverId);
+        appMatchedPairsRepository.deleteByDriverId(driverId);
     }
 
     private void removePassengersPairedWithDriver(String driverId) {
         List<AppMatchedPairs> matchedPairs = appMatchedPairsRepository.selectAllByDriverId(driverId);
+        if (matchedPairs.isEmpty()) {
+            return;
+        }
         List<String> passengersId = matchedPairs
                 .stream()
                 .map(AppMatchedPairs::getPassengerId)
                 .collect(Collectors.toList());
-        appUserRepository.removeAllByIdIn(passengersId);
         appUserRouteRepository.removeAllByUserIdIn(passengersId);
+        appUserRepository.removeAllByIdIn(passengersId);
 
     }
 

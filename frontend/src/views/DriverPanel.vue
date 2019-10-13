@@ -36,6 +36,11 @@
           <passengers-list-view :id="id" />
         </v-col>
       </v-row>
+      <v-row align="center" justify="center">
+        <v-btn :loading="isEndTripDisable" @click="endTrip" color="error"
+          >Zakończ przejazd</v-btn
+        >
+      </v-row>
     </v-container>
   </v-content>
 </template>
@@ -43,7 +48,7 @@
 <script lang="js">
 import RouteMap from "../components/RouteMap";
 import PassengersListView from "../components/PassengersList";
-import {getRouteStreet} from "../constants";
+import {getRouteStreet, getEndTripUrl} from "../constants";
 
 export default {
   name: 'driver-panel-view',
@@ -58,7 +63,8 @@ export default {
       isLoading: false,
       from: null,
       to: null,
-      streetNames: null
+      streetNames: null,
+      isEndTripDisable: false
     }
   },
   mounted() {
@@ -83,6 +89,20 @@ export default {
         console.error(err);
       })
       .finally(() => (this.isLoading = false));
+    },
+    endTrip() {
+      this.isEndTripDisable = true;
+
+      fetch(getEndTripUrl(this.id),{
+        method: 'DELETE'
+      })
+      .then(() => {
+        this.$router.push(`/`);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => (this.isEndTripDisable = false));
     }
   }
 };
