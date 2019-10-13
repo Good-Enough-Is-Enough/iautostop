@@ -73,6 +73,9 @@ export default {
     this.intervalId = window.setInterval(this.getPassengers, 5000);
     this.getConnectedPassengers();
   },
+  destroyed() {
+    window.clearInterval(this.intervalId);
+  },
   methods: {
     selectPassenger($event, passengerId) {
 
