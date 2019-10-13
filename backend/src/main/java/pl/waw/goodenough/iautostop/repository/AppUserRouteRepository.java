@@ -28,5 +28,5 @@ public interface AppUserRouteRepository extends CrudRepository<AppUserRoute, Str
             "JOIN AppUser u ON u.id = ur.userId " +
             "WHERE ur.userId= :id " +
             "  AND u.role = 'driver'")
-    AppUserRoute getDriverById(@Param("id") final String id);
+    AppUserRoute getDriverRouteById(@Param("id") final String id);
 }

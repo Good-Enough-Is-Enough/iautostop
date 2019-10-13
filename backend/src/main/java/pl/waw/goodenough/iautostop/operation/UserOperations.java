@@ -12,10 +12,7 @@ import pl.waw.goodenough.iautostop.repository.AppUserRouteRepository;
 import pl.waw.goodenough.iautostop.repository.MapApiRepository;
 import pl.waw.goodenough.iautostop.service.RouteService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -75,7 +72,7 @@ public class UserOperations {
 
     public List<UserLoggedInDto> getAvailablePassengers(String driverId) {
 
-        final AppUserRoute driver = appUserRouteRepository.getDriverById(driverId);
+        final AppUserRoute driver = appUserRouteRepository.getDriverRouteById(driverId);
         final List<AppUserRoute> passengers = appUserRouteRepository.findAllPassengers();
 
         List<UserLoggedInDto> matchedPassengers = new ArrayList<>();
@@ -103,13 +100,29 @@ public class UserOperations {
         return matchedPassengers;
     }
 
+    public List<String> removeFirstStreet(String driverId) {
+        AppUserRoute driverRoute = appUserRouteRepository.getDriverRouteById(driverId);
+        if (driverRoute.getTravelStreetList().isEmpty()) {
+            appUserRouteRepository.delete(driverRoute);
+            return Collections.emptyList();
+        } else {
+            List<String> streets = getStreetNamesList(driverRoute);
+            List<String> reducedStreetList = streets.subList(1, streets.size());
+
+            String reducedStreetsListsString = String.join(", ", reducedStreetList);
+
+            driverRoute.setTravelStreetList(reducedStreetsListsString);
+            appUserRouteRepository.save(driverRoute);
+            return reducedStreetList;
+        }
+    }
+
     public List<String> getStreetNamesForDriver(String driverId) {
-        AppUserRoute driver = appUserRouteRepository.getDriverById(driverId);
+        AppUserRoute driver = appUserRouteRepository.getDriverRouteById(driverId);
         return getStreetNamesList(driver);
     }
 
-    private List<String> getStreetNamesList(AppUserRoute driver) {
-        return Arrays.asList(driver.getTravelStreetList().split(","));
+    private List<String> getStreetNamesList(AppUserRoute appuserRoute) {
+        return Arrays.asList(appuserRoute.getTravelStreetList().split(","));
     }
-
 }

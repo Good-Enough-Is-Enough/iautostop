@@ -62,4 +62,13 @@ public class UserController {
         final List<String> streets = userOperations.getStreetNamesForDriver(driverId);
         return new ResponseEntity<>(streets, OK);
     }
+
+    @PutMapping(value = "/{driverId}/remove-first-street")
+    public ResponseEntity<List<String>> removeFirstStreet(
+            @PathVariable(value = "driverId") final String driverId) {
+
+        List<String> streets = userOperations.removeFirstStreet(driverId);
+
+        return new ResponseEntity<>(streets, OK);
+    }
 }
