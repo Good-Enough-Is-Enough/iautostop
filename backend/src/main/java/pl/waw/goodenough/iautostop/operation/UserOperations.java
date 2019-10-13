@@ -4,18 +4,19 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.waw.goodenough.iautostop.model.dto.CoordinatesDto;
+import pl.waw.goodenough.iautostop.model.dto.DriversRouteDto;
 import pl.waw.goodenough.iautostop.model.dto.UserLoggedInDto;
+import pl.waw.goodenough.iautostop.model.entity.AppMatchedPairs;
 import pl.waw.goodenough.iautostop.model.entity.AppUser;
 import pl.waw.goodenough.iautostop.model.entity.AppUserRoute;
+import pl.waw.goodenough.iautostop.repository.AppMatchedPairsRepository;
 import pl.waw.goodenough.iautostop.repository.AppUserRepository;
 import pl.waw.goodenough.iautostop.repository.AppUserRouteRepository;
 import pl.waw.goodenough.iautostop.repository.MapApiRepository;
 import pl.waw.goodenough.iautostop.service.RouteService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,6 +26,7 @@ public class UserOperations {
     private AppUserRouteRepository appUserRouteRepository;
     private RouteService routeService;
     private MapApiRepository mapApiRepository;
+    private AppMatchedPairsRepository appMatchedPairsRepository;
 
     public UserLoggedInDto getUser(final String id) {
 
@@ -79,7 +81,11 @@ public class UserOperations {
     public List<UserLoggedInDto> getAvailablePassengers(String driverId) {
 
         final AppUserRoute driver = appUserRouteRepository.getDriverById(driverId);
-        final List<AppUserRoute> passengers = appUserRouteRepository.findAllPassengers();
+        if (driver == null) {
+            return Collections.emptyList();
+        }
+
+        final List<AppUserRoute> passengers = appUserRouteRepository.findAllAvailablePassengers();
 
         List<UserLoggedInDto> matchedPassengers = new ArrayList<>();
 
@@ -95,7 +101,7 @@ public class UserOperations {
                 String userName = "";
                 String userPhone = "";
 
-                if(appUser.isPresent())  {
+                if (appUser.isPresent()) {
                     userName = appUser.get().getName();
                     userPhone = appUser.get().getPhone();
                 }
@@ -117,12 +123,49 @@ public class UserOperations {
         return matchedPassengers;
     }
 
-    public List<String> getStreetNamesForDriver(String driverId) {
+    @Transactional
+    public void endTripForDriver(String driverId) {
+
+        removePassengersPairedWithDriver(driverId);
+
+        appUserRouteRepository.deleteById(driverId);
+        appUserRepository.deleteById(driverId);
+        appMatchedPairsRepository.deleteById(driverId);
+    }
+
+    private void removePassengersPairedWithDriver(String driverId) {
+        List<AppMatchedPairs> matchedPairs = appMatchedPairsRepository.selectAllByDriverId(driverId);
+        List<String> passengersId = matchedPairs
+                .stream()
+                .map(AppMatchedPairs::getPassengerId)
+                .collect(Collectors.toList());
+        appUserRepository.removeAllByIdIn(passengersId);
+        appUserRouteRepository.removeAllByUserIdIn(passengersId);
+
+    }
+
+    public DriversRouteDto getStreetNamesForDriver(String driverId) {
         AppUserRoute driver = appUserRouteRepository.getDriverById(driverId);
-        return getStreetNamesList(driver);
+        List<String> streetNamesList = getStreetNamesList(driver);
+
+        return DriversRouteDto
+                .builder()
+                .streetNames(streetNamesList)
+                .startCoords(driver.getTravelFrom())
+                .endCoords(driver.getTravelTo())
+                .build();
     }
 
     private List<String> getStreetNamesList(AppUserRoute driver) {
         return Arrays.asList(driver.getTravelStreetList().split(","));
+    }
+
+    public void connectPassengerToDriver(final String passengerId, final String driverId) {
+
+        AppMatchedPairs appMatchedPairs = new AppMatchedPairs();
+        appMatchedPairs.setPassengerId(passengerId);
+        appMatchedPairs.setDriverId(driverId);
+        appMatchedPairs.setInsertDate(new Date());
+        appMatchedPairsRepository.save(appMatchedPairs);
     }
 }

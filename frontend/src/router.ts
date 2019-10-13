@@ -20,13 +20,13 @@ export default new Router({
       component: () => import("./views/SetTripView.vue")
     },
     {
-      path: "/:role/:id/passengers-list",
-      name: "PassengersListView",
+      path: "/driver/:id/panel",
+      name: "DriverPanelView",
       props: true,
-      component: () => import("./views/PassengersListView.vue")
+      component: () => import("./views/DriverPanel.vue")
     },
     {
-      path: "/:passenger/:id/panel",
+      path: "/passenger/:id/panel",
       name: "PassengerPanel",
       props: true,
       component: () => import("./views/PassengerPanel.vue")
