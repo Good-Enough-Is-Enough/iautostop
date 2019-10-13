@@ -128,7 +128,7 @@ export default {
         setTimeout(() => {
           this.isLoading = false;
           notifyMe('Podwózka zaakceptowana!');
-        }, 5000);
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
