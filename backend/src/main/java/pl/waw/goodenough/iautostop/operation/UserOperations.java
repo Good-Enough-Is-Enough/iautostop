@@ -120,12 +120,14 @@ public class UserOperations {
                     userPhone = appUser.get().getPhone();
                 }
 
+                List<String> startEnd = getStreetNamesList(appUserRoute);
+
                 matchedPassengers.add(
                         UserLoggedInDto
                                 .builder()
                                 .id(appUserRoute.getUserId())
-                                .travelFrom(appUserRoute.getTravelFrom())
-                                .travelTo(appUserRoute.getTravelTo())
+                                .travelFrom(startEnd.get(0))
+                                .travelTo(startEnd.get(1))
                                 .role("passenger")
                                 .name(userName)
                                 .phone(userPhone)
@@ -196,8 +198,8 @@ public class UserOperations {
                 .build();
     }
 
-    private List<String> getStreetNamesList(AppUserRoute driver) {
-        return Arrays.asList(driver.getTravelStreetList().split(","));
+    private List<String> getStreetNamesList(AppUserRoute appUserRoute) {
+        return Arrays.asList(appUserRoute.getTravelStreetList().split(","));
     }
 
     public void connectPassengerToDriver(final String passengerId, final String driverId) {
