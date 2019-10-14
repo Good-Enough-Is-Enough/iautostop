@@ -99,13 +99,16 @@ export default {
         name: null,
         phone: null
       },
-      isLoading: false,
+
+      isLoading: true,
       intervalId: null,
       showError: false
     }
   },
   mounted() {
-    this.getDriver();
+    setTimeout(() => {
+        this.getDriver();
+    }, 1000);
     this.intervalId = window.setInterval(this.getDriver, 5000);
   },
   destroyed() {
@@ -125,10 +128,9 @@ export default {
         this.availableDriver = res;
         window.clearInterval(this.intervalId);
 
-        setTimeout(() => {
           this.isLoading = false;
           notifyMe('Podwózka zaakceptowana!');
-        }, 1000);
+
       })
       .catch((err) => {
         console.log(err);
