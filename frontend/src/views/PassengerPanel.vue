@@ -1,94 +1,30 @@
 <template>
   <v-content>
-    <v-card
+    <lift-status-message
       v-if="isLoading && !showError"
       :loading="isLoading"
-      class="mx-auto card"
-      max-width="500"
-    >
-      <v-img
-        class="white--text align-end"
-        height="200px"
-        src="https://cdn.pixabay.com/photo/2019/08/20/15/32/cialis-4419052_960_720.jpg"
-      >
-        <v-card-title>
-          <strong>Szukamy dla Ciebie podwózki...</strong>
-        </v-card-title>
-      </v-img>
-
-      <v-card-text class="text--primary">
-        <div>Powiadomimy Cię,gdy któryś z dostępnych</div>
-        <div>kierowców zaakceptuje przejazd</div>
-      </v-card-text>
-    </v-card>
-
-    <v-card
+      :message="message.waiting"
+    />
+    <lift-status-message
       v-if="!isLoading && !showError"
-      class="mx-auto card"
-      max-width="500"
-    >
-      <v-img
-        class="white--text align-end"
-        height="200px"
-        src="https://previews.123rf.com/images/tanyalmera/tanyalmera1606/tanyalmera160600005/58296044-hooray-word-cartoon-hand-lettering-positive-saying-for-cards-posters-and-social-media-content-happin.jpg"
-      >
-        <v-card-title class="text--primary"
-          ><strong>Podwózka zaakceptowana!</strong></v-card-title
-        >
-      </v-img>
-
-      <v-card-text class="text--primary">
-        <div class="driver-info"><strong>DANE KIEROWCY:</strong></div>
-        <div class="driver-info">
-          <v-icon v-text="'mdi-account'" />
-          {{ availableDriver.name }}
-        </div>
-        <div class="driver-info">
-          <v-icon v-text="'mdi-phone'" />
-          {{ availableDriver.phone }}
-        </div>
-      </v-card-text>
-
-      <v-card-actions>
-        <v-btn color="orange" text to="/">
-          Wróć do strony głównej
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-
-    <v-card v-if="!isLoading && showError" class="mx-auto card" max-width="500">
-      <v-img
-        class="white--text align-end"
-        height="200px"
-        src="https://www.elegantthemes.com/blog/wp-content/uploads/2016/03/500-internal-server-error-featured-image-1.png"
-      >
-        <v-card-title>
-          <strong>Popsuło się :(</strong>
-        </v-card-title>
-      </v-img>
-
-      <v-card-text class="text--primary">
-        <div>
-          <v-icon v-text="'mdi-internet'" />
-          Sprawdź swoje połączenie sieciowe i spróbuj ponownie
-        </div>
-      </v-card-text>
-
-      <v-card-actions>
-        <v-btn color="orange" text>
-          Wróć do strony głównej
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+      :message="message.success"
+      :driver-info="availableDriver"
+    />
+    <lift-status-message
+      v-if="!isLoading && showError"
+      :message="message.error"
+    />
   </v-content>
 </template>
 
 <script lang="js">
-import {notifyMe} from "../utils/notificationService";
-import { getAvailableDriver } from "../constants";
+import { notifyMe } from "../utils/notificationService";
+import { getAvailableDriver, MSG } from "../constants";
+import { LiftStatusMessage } from "../components";
 
 export default {
   name: "PassengerPanel",
+  components: { LiftStatusMessage },
   props: {
     id: {String},
     role: {String}
@@ -99,10 +35,14 @@ export default {
         name: null,
         phone: null
       },
-
       isLoading: true,
       intervalId: null,
       showError: false
+    }
+  },
+  computed: {
+    message() {
+      return MSG.PASSENGER;
     }
   },
   mounted() {
@@ -142,13 +82,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.card {
-  margin-top: 50px;
-}
-
-.driver-info {
-  margin-bottom: 12px;
-}
-</style>

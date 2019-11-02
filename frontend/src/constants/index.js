@@ -1,4 +1,5 @@
 import IMG from "./images";
+import MSG from "./messages";
 const MAIN_API_PATH = "/api/users";
 const HERE_MAP_APP_ID = "i8w3y91fhZ5nDPijP7XL";
 const HERE_MAP_APP_CODE = "v6YKXNdMEl2eGoTGHyToSQ";
@@ -27,6 +28,7 @@ const getEndTripUrl = driverId =>
 
 export {
   IMG,
+  MSG,
   HERE_MAP_APP_ID,
   HERE_MAP_APP_CODE,
   SET_USER_INFO,
