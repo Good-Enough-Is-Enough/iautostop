@@ -33,26 +33,25 @@
           </v-list>
         </v-col>
         <v-col cols="12">
-          <passengers-list-view :id="id" />
+          <passengers-list :id="id" />
         </v-col>
       </v-row>
       <v-row align="center" justify="center">
-        <v-btn :loading="isEndTripDisable" @click="endTrip" color="error"
-          >Zakończ przejazd</v-btn
-        >
+        <v-btn :loading="isEndTripDisable" @click="endTrip" color="error">
+          Zakończ przejazd
+        </v-btn>
       </v-row>
     </v-container>
   </v-content>
 </template>
 
 <script lang="js">
-import RouteMap from "../components/RouteMap";
-import PassengersListView from "../components/PassengersList";
-import {getRouteStreet, getEndTripUrl} from "../constants";
+import { PassengersList, RouteMap } from "../components";
+import { getRouteStreet, getEndTripUrl } from "../constants";
 
 export default {
   name: 'driver-panel-view',
-  components: {RouteMap, PassengersListView},
+  components: { RouteMap, PassengersList },
   props: {
     id: {String},
   },

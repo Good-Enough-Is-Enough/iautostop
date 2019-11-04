@@ -22,7 +22,7 @@
           <v-list-item-title v-text="passenger.name" />
           <v-list-item-subtitle
             v-html="`Z: ${passenger.travelFrom}, do: ${passenger.travelTo}`"
-          ></v-list-item-subtitle>
+          />
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -38,10 +38,8 @@
           <v-list-item-title v-text="passenger.name" />
           <v-list-item-subtitle
             v-html="`Z: ${passenger.travelFrom}, do: ${passenger.travelTo}`"
-          ></v-list-item-subtitle>
-          <v-list-item-subtitle
-            v-html="`Tel: ${passenger.phone}`"
-          ></v-list-item-subtitle>
+          />
+          <v-list-item-subtitle v-html="`Tel: ${passenger.phone}`" />
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -50,15 +48,13 @@
 
 <script lang="js">
 import isEqual from "lodash/isEqual";
-import {getAvailablePassengersUrl, connectTo, getConnectedPassengers} from "../constants";
-import {notifyMe} from "../utils/notificationService";
-
+import { getAvailablePassengersUrl, connectTo, getConnectedPassengers } from "../constants";
+import { notifyMe } from "../utils/notificationService";
 
 export default {
   name: 'PassengersListView',
-  components: {},
   props: {
-    id: {String},
+    id: { String },
   },
   data() {
     return {

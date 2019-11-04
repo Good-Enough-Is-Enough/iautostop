@@ -29,7 +29,7 @@
 <script lang="js">
 import { mask } from "vue-the-mask";
 
-import LocationSelector from "../components/LocationSelector";
+import { LocationSelector } from "../components";
 import { SET_USER_INFO } from "../constants";
 
 export default {
